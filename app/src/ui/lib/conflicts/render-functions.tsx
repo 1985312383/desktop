@@ -2,13 +2,13 @@ import * as React from 'react'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
 import { LinkButton } from '../link-button'
+import { t } from '../../../lib/i18n'
 
 export function renderUnmergedFilesSummary(conflictedFilesCount: number) {
-  // localization, it burns :vampire:
   const message =
     conflictedFilesCount === 1
-      ? `1 conflicted file`
-      : `${conflictedFilesCount} conflicted files`
+      ? t('conflicts.summary.one')
+      : t('conflicts.summary.other', { count: conflictedFilesCount })
   return <h2 className="summary">{message}</h2>
 }
 
@@ -18,7 +18,7 @@ export function renderAllResolved() {
       <div className="green-circle">
         <Octicon symbol={octicons.check} />
       </div>
-      <div className="message">All conflicts resolved</div>
+      <div className="message">{t('conflicts.allResolved')}</div>
     </div>
   )
 }
@@ -27,9 +27,9 @@ export function renderShellLink(openThisRepositoryInShell: () => void) {
   return (
     <div>
       <LinkButton onClick={openThisRepositoryInShell}>
-        Open in command line,
+        {t('conflicts.shell.openInCommandLine')}
       </LinkButton>{' '}
-      your tool of choice, or close to resolve manually.
+      {t('conflicts.shell.resolveManually')}
     </div>
   )
 }

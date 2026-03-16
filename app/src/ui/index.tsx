@@ -76,10 +76,16 @@ import { trampolineServer } from '../lib/trampoline/trampoline-server'
 import { TrampolineCommandIdentifier } from '../lib/trampoline/trampoline-command'
 import { createAskpassTrampolineHandler } from '../lib/trampoline/trampoline-askpass-handler'
 import { createCredentialHelperTrampolineHandler } from '../lib/trampoline/trampoline-credential-helper'
+import { getStoredLocalePreference, initializeLocale } from '../lib/i18n'
 
 if (__DEV__) {
   installDevGlobals()
 }
+
+initializeLocale({
+  preferredLocale: getStoredLocalePreference(),
+  systemLocale: navigator.language,
+})
 
 migrateRendererGUID()
 

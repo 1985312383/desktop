@@ -51,8 +51,10 @@ import {
 import { initializeDesktopNotifications } from './notifications'
 import parseCommandLineArgs from 'minimist'
 import { CLIAction } from '../lib/cli-action'
+import { initializeLocale } from '../lib/i18n'
 
 app.setAppLogsPath()
+initializeLocale({ systemLocale: app.getLocale() })
 enableSourceMaps()
 
 let mainWindow: AppWindow | null = null

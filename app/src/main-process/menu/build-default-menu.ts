@@ -8,6 +8,7 @@ import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
 import { buildTestMenu } from './build-test-menu'
+import { t } from '../../lib/i18n'
 
 const createPullRequestLabel = __DARWIN__
   ? 'Create Pull Request'
@@ -100,7 +101,7 @@ export function buildDefaultMenu({
   }
 
   const fileMenu: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__ ? 'File' : '&File',
+    label: __DARWIN__ ? t('menu.file.darwin') : t('menu.file.other'),
     submenu: [
       {
         label: __DARWIN__ ? 'New Repository…' : 'New &repository…',
@@ -148,7 +149,7 @@ export function buildDefaultMenu({
   template.push(fileMenu)
 
   template.push({
-    label: __DARWIN__ ? 'Edit' : '&Edit',
+    label: __DARWIN__ ? t('menu.edit.darwin') : t('menu.edit.other'),
     submenu: [
       { role: 'undo', label: __DARWIN__ ? 'Undo' : '&Undo' },
       { role: 'redo', label: __DARWIN__ ? 'Redo' : '&Redo' },
@@ -172,7 +173,7 @@ export function buildDefaultMenu({
   })
 
   template.push({
-    label: __DARWIN__ ? 'View' : '&View',
+    label: __DARWIN__ ? t('menu.view.darwin') : t('menu.view.other'),
     submenu: [
       {
         label: __DARWIN__ ? 'Show Changes' : '&Changes',

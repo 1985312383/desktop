@@ -5,6 +5,7 @@ import { Ref } from '../lib/ref'
 import { Repository } from '../../models/repository'
 import { TrashNameLabel } from '../lib/context-menu'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from '../../lib/i18n'
 
 interface IConfirmRemoveRepositoryProps {
   /** The repository to be removed */
@@ -57,7 +58,11 @@ export class ConfirmRemoveRepository extends React.Component<
         id="confirm-remove-repository"
         key="remove-repository-confirmation"
         type="warning"
-        title={__DARWIN__ ? 'Remove Repository' : 'Remove repository'}
+        title={
+          __DARWIN__
+            ? t('dialog.removeRepository.title.darwin')
+            : t('dialog.removeRepository.title.other')
+        }
         dismissDisabled={isRemovingRepository}
         loading={isRemovingRepository}
         disabled={isRemovingRepository}
@@ -66,11 +71,12 @@ export class ConfirmRemoveRepository extends React.Component<
       >
         <DialogContent>
           <p>
-            Are you sure you want to remove the repository "
-            {this.props.repository.name}" from GitHub Desktop?
+            {t('dialog.removeRepository.confirmation', {
+              repositoryName: this.props.repository.name,
+            })}
           </p>
           <div className="description">
-            <p>The repository will be removed from GitHub Desktop:</p>
+            <p>{t('dialog.removeRepository.description')}</p>
             <p>
               <Ref>{this.props.repository.path}</Ref>
             </p>
@@ -78,7 +84,9 @@ export class ConfirmRemoveRepository extends React.Component<
 
           <div>
             <Checkbox
-              label={'Also move this repository to ' + TrashNameLabel}
+              label={t('dialog.removeRepository.moveToTrash', {
+                trashName: TrashNameLabel,
+              })}
               value={
                 this.state.deleteRepoFromDisk
                   ? CheckboxValue.On
@@ -89,7 +97,10 @@ export class ConfirmRemoveRepository extends React.Component<
           </div>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Remove" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('dialog.removeRepository.confirmButton')}
+          />
         </DialogFooter>
       </Dialog>
     )
