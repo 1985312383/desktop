@@ -11,20 +11,24 @@ import { buildTestMenu } from './build-test-menu'
 import { t } from '../../lib/i18n'
 
 const createPullRequestLabel = __DARWIN__
-  ? 'Create Pull Request'
-  : 'Create &pull request'
+  ? t('menu.branch.createPullRequest.darwin')
+  : t('menu.branch.createPullRequest.other')
 const showPullRequestLabel = __DARWIN__
-  ? 'View Pull Request on GitHub'
-  : 'View &pull request on GitHub'
+  ? t('menu.branch.viewPullRequest.darwin')
+  : t('menu.branch.viewPullRequest.other')
 const defaultBranchNameValue = __DARWIN__ ? 'Default Branch' : 'default branch'
-const confirmRepositoryRemovalLabel = __DARWIN__ ? 'Remove…' : '&Remove…'
-const repositoryRemovalLabel = __DARWIN__ ? 'Remove' : '&Remove'
+const confirmRepositoryRemovalLabel = __DARWIN__
+  ? `${t('dialog.removeRepository.confirmButton')}...`
+  : `${t('dialog.removeRepository.confirmButton')}(&R)...`
+const repositoryRemovalLabel = __DARWIN__
+  ? t('dialog.removeRepository.confirmButton')
+  : `${t('dialog.removeRepository.confirmButton')}(&R)`
 const confirmStashAllChangesLabel = __DARWIN__
-  ? 'Stash All Changes…'
-  : '&Stash all changes…'
+  ? t('menu.branch.stashAllChangesConfirm.darwin')
+  : t('menu.branch.stashAllChangesConfirm.other')
 const stashAllChangesLabel = __DARWIN__
-  ? 'Stash All Changes'
-  : '&Stash all changes'
+  ? t('menu.branch.stashAllChanges.darwin')
+  : t('menu.branch.stashAllChanges.other')
 
 enum ZoomDirection {
   Reset,
@@ -65,23 +69,23 @@ export function buildDefaultMenu({
 
   if (__DARWIN__) {
     template.push({
-      label: 'GitHub Desktop',
+      label: t('menu.app.title'),
       submenu: [
         {
-          label: 'About GitHub Desktop',
+          label: t('menu.app.about'),
           click: emit('show-about'),
           id: 'about',
         },
         separator,
         {
-          label: 'Settings…',
+          label: t('menu.app.settings'),
           id: 'preferences',
           accelerator: 'CmdOrCtrl+,',
           click: emit('show-preferences'),
         },
         separator,
         {
-          label: 'Install Command Line Tool…',
+          label: t('menu.app.installCli'),
           id: 'install-cli',
           click: emit('install-darwin-cli'),
         },
@@ -104,20 +108,26 @@ export function buildDefaultMenu({
     label: __DARWIN__ ? t('menu.file.darwin') : t('menu.file.other'),
     submenu: [
       {
-        label: __DARWIN__ ? 'New Repository…' : 'New &repository…',
+        label: __DARWIN__
+          ? t('menu.file.newRepository.darwin')
+          : t('menu.file.newRepository.other'),
         id: 'new-repository',
         click: emit('create-repository'),
         accelerator: 'CmdOrCtrl+N',
       },
       separator,
       {
-        label: __DARWIN__ ? 'Add Local Repository…' : 'Add &local repository…',
+        label: __DARWIN__
+          ? t('menu.file.addLocalRepository.darwin')
+          : t('menu.file.addLocalRepository.other'),
         id: 'add-local-repository',
         accelerator: 'CmdOrCtrl+O',
         click: emit('add-local-repository'),
       },
       {
-        label: __DARWIN__ ? 'Clone Repository…' : 'Clo&ne repository…',
+        label: __DARWIN__
+          ? t('menu.file.cloneRepository.darwin')
+          : t('menu.file.cloneRepository.other'),
         id: 'clone-repository',
         accelerator: 'CmdOrCtrl+Shift+O',
         click: emit('clone-repository'),
@@ -132,7 +142,7 @@ export function buildDefaultMenu({
     fileItems.push(
       separator,
       {
-        label: '&Options…',
+        label: t('menu.file.options.other'),
         id: 'preferences',
         accelerator: 'CmdOrCtrl+,',
         click: emit('show-preferences'),
@@ -140,7 +150,7 @@ export function buildDefaultMenu({
       separator,
       {
         role: 'quit',
-        label: 'E&xit',
+        label: t('menu.file.exit.other'),
         accelerator: exitAccelerator,
       }
     )
@@ -151,21 +161,40 @@ export function buildDefaultMenu({
   template.push({
     label: __DARWIN__ ? t('menu.edit.darwin') : t('menu.edit.other'),
     submenu: [
-      { role: 'undo', label: __DARWIN__ ? 'Undo' : '&Undo' },
-      { role: 'redo', label: __DARWIN__ ? 'Redo' : '&Redo' },
-      separator,
-      { role: 'cut', label: __DARWIN__ ? 'Cut' : 'Cu&t' },
-      { role: 'copy', label: __DARWIN__ ? 'Copy' : '&Copy' },
-      { role: 'paste', label: __DARWIN__ ? 'Paste' : '&Paste' },
       {
-        label: __DARWIN__ ? 'Select All' : 'Select &all',
+        role: 'undo',
+        label: __DARWIN__ ? t('menu.edit.undo.darwin') : t('menu.edit.undo.other'),
+      },
+      {
+        role: 'redo',
+        label: __DARWIN__ ? t('menu.edit.redo.darwin') : t('menu.edit.redo.other'),
+      },
+      separator,
+      {
+        role: 'cut',
+        label: __DARWIN__ ? t('menu.edit.cut.darwin') : t('menu.edit.cut.other'),
+      },
+      {
+        role: 'copy',
+        label: __DARWIN__ ? t('menu.edit.copy.darwin') : t('menu.edit.copy.other'),
+      },
+      {
+        role: 'paste',
+        label: __DARWIN__
+          ? t('menu.edit.paste.darwin')
+          : t('menu.edit.paste.other'),
+      },
+      {
+        label: __DARWIN__
+          ? t('menu.edit.selectAll.darwin')
+          : t('menu.edit.selectAll.other'),
         accelerator: 'CmdOrCtrl+A',
         click: emit('select-all'),
       },
       separator,
       {
         id: 'find',
-        label: __DARWIN__ ? 'Find' : '&Find',
+        label: __DARWIN__ ? t('menu.edit.find.darwin') : t('menu.edit.find.other'),
         accelerator: 'CmdOrCtrl+F',
         click: emit('find-text'),
       },
@@ -176,32 +205,42 @@ export function buildDefaultMenu({
     label: __DARWIN__ ? t('menu.view.darwin') : t('menu.view.other'),
     submenu: [
       {
-        label: __DARWIN__ ? 'Show Changes' : '&Changes',
+        label: __DARWIN__
+          ? t('menu.view.showChanges.darwin')
+          : t('menu.view.showChanges.other'),
         id: 'show-changes',
         accelerator: 'CmdOrCtrl+1',
         click: emit('show-changes'),
       },
       {
-        label: __DARWIN__ ? 'Show History' : '&History',
+        label: __DARWIN__
+          ? t('menu.view.showHistory.darwin')
+          : t('menu.view.showHistory.other'),
         id: 'show-history',
         accelerator: 'CmdOrCtrl+2',
         click: emit('show-history'),
       },
       {
-        label: __DARWIN__ ? 'Show Repository List' : 'Repository &list',
+        label: __DARWIN__
+          ? t('menu.view.showRepositoryList.darwin')
+          : t('menu.view.showRepositoryList.other'),
         id: 'show-repository-list',
         accelerator: 'CmdOrCtrl+T',
         click: emit('choose-repository'),
       },
       {
-        label: __DARWIN__ ? 'Show Branches List' : '&Branches list',
+        label: __DARWIN__
+          ? t('menu.view.showBranchesList.darwin')
+          : t('menu.view.showBranchesList.other'),
         id: 'show-branches-list',
         accelerator: 'CmdOrCtrl+B',
         click: emit('show-branches'),
       },
       separator,
       {
-        label: __DARWIN__ ? 'Go to Summary' : 'Go to &Summary',
+        label: __DARWIN__
+          ? t('menu.view.goToSummary.darwin')
+          : t('menu.view.goToSummary.other'),
         id: 'go-to-commit-message',
         accelerator: 'CmdOrCtrl+G',
         click: emit('go-to-commit-message'),
@@ -215,54 +254,64 @@ export function buildDefaultMenu({
           : emit('show-stashed-changes'),
       },
       {
-        label: __DARWIN__
-          ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
-          : `${
-              isChangesFilterVisible ? 'Hide' : 'Show'
-            } Toggle Chan&ges Filter`,
+        label: isChangesFilterVisible
+          ? __DARWIN__
+            ? t('menu.view.hideChangesFilter.darwin')
+            : t('menu.view.hideChangesFilter.other')
+          : __DARWIN__
+          ? t('menu.view.showChangesFilter.darwin')
+          : t('menu.view.showChangesFilter.other'),
         id: 'toggle-changes-filter',
         accelerator: 'CmdOrCtrl+L',
         click: emit('toggle-changes-filter'),
       },
       {
-        label: __DARWIN__ ? 'Toggle Full Screen' : 'Toggle &full screen',
+        label: __DARWIN__
+          ? t('menu.view.toggleFullScreen.darwin')
+          : t('menu.view.toggleFullScreen.other'),
         role: 'togglefullscreen',
       },
       separator,
       {
-        label: __DARWIN__ ? 'Reset Zoom' : 'Reset zoom',
+        label: __DARWIN__
+          ? t('menu.view.resetZoom.darwin')
+          : t('menu.view.resetZoom.other'),
         accelerator: 'CmdOrCtrl+0',
         click: zoom(ZoomDirection.Reset),
       },
       {
-        label: __DARWIN__ ? 'Zoom In' : 'Zoom in',
+        label: __DARWIN__
+          ? t('menu.view.zoomIn.darwin')
+          : t('menu.view.zoomIn.other'),
         accelerator: 'CmdOrCtrl+=',
         click: zoom(ZoomDirection.In),
       },
       {
-        label: __DARWIN__ ? 'Zoom Out' : 'Zoom out',
+        label: __DARWIN__
+          ? t('menu.view.zoomOut.darwin')
+          : t('menu.view.zoomOut.other'),
         accelerator: 'CmdOrCtrl+-',
         click: zoom(ZoomDirection.Out),
       },
       {
         label: __DARWIN__
-          ? 'Expand Active Resizable'
-          : 'Expand active resizable',
+          ? t('menu.view.expandActiveResizable.darwin')
+          : t('menu.view.expandActiveResizable.other'),
         id: 'increase-active-resizable-width',
         accelerator: 'CmdOrCtrl+9',
         click: emit('increase-active-resizable-width'),
       },
       {
         label: __DARWIN__
-          ? 'Contract Active Resizable'
-          : 'Contract active resizable',
+          ? t('menu.view.contractActiveResizable.darwin')
+          : t('menu.view.contractActiveResizable.other'),
         id: 'decrease-active-resizable-width',
         accelerator: 'CmdOrCtrl+8',
         click: emit('decrease-active-resizable-width'),
       },
       separator,
       {
-        label: '&Reload',
+        label: t('menu.view.reload.other'),
         id: 'reload-window',
         // Ctrl+Alt is interpreted as AltGr on international keyboards and this
         // can clash with other shortcuts. We should always use Ctrl+Shift for
@@ -279,8 +328,8 @@ export function buildDefaultMenu({
       {
         id: 'show-devtools',
         label: __DARWIN__
-          ? 'Toggle Developer Tools'
-          : '&Toggle developer tools',
+          ? t('menu.view.toggleDeveloperTools.darwin')
+          : t('menu.view.toggleDeveloperTools.other'),
         accelerator: (() => {
           return __DARWIN__ ? 'Alt+Command+I' : 'Ctrl+Shift+I'
         })(),
@@ -301,7 +350,9 @@ export function buildDefaultMenu({
   const pushEventType = isForcePushForCurrentRepository ? 'force-push' : 'push'
 
   template.push({
-    label: __DARWIN__ ? 'Repository' : '&Repository',
+    label: __DARWIN__
+      ? t('menu.repository.darwin')
+      : t('menu.repository.other'),
     id: 'repository',
     submenu: [
       {
@@ -312,13 +363,17 @@ export function buildDefaultMenu({
       },
       {
         id: 'pull',
-        label: __DARWIN__ ? 'Pull' : 'Pu&ll',
+        label: __DARWIN__
+          ? t('menu.repository.pull.darwin')
+          : t('menu.repository.pull.other'),
         accelerator: 'CmdOrCtrl+Shift+P',
         click: emit('pull'),
       },
       {
         id: 'fetch',
-        label: __DARWIN__ ? 'Fetch' : '&Fetch',
+        label: __DARWIN__
+          ? t('menu.repository.fetch.darwin')
+          : t('menu.repository.fetch.other'),
         accelerator: 'CmdOrCtrl+Shift+T',
         click: emit('fetch'),
       },
@@ -331,38 +386,50 @@ export function buildDefaultMenu({
       separator,
       {
         id: 'view-repository-on-github',
-        label: __DARWIN__ ? 'View on GitHub' : '&View on GitHub',
+        label: __DARWIN__
+          ? t('menu.repository.viewOnGitHub.darwin')
+          : t('menu.repository.viewOnGitHub.other'),
         accelerator: 'CmdOrCtrl+Shift+G',
         click: emit('view-repository-on-github'),
       },
       {
         label: __DARWIN__
-          ? `Open in ${selectedShell ?? 'Shell'}`
-          : `O&pen in ${selectedShell ?? 'shell'}`,
+          ? t('menu.repository.openInShell.darwin', {
+              name: selectedShell ?? 'Shell',
+            })
+          : t('menu.repository.openInShell.other', {
+              name: selectedShell ?? 'shell',
+            }),
         id: 'open-in-shell',
         accelerator: 'Ctrl+`',
         click: emit('open-in-shell'),
       },
       {
         label: __DARWIN__
-          ? 'Show in Finder'
+          ? t('menu.repository.openWorkingDirectory.darwin')
           : __WIN32__
-          ? 'Show in E&xplorer'
-          : 'Show in your File Manager',
+          ? t('menu.repository.openWorkingDirectory.win32')
+          : t('menu.repository.openWorkingDirectory.other'),
         id: 'open-working-directory',
         accelerator: 'CmdOrCtrl+Shift+F',
         click: emit('open-working-directory'),
       },
       {
         label: __DARWIN__
-          ? `Open in ${selectedExternalEditor ?? 'External Editor'}`
-          : `&Open in ${selectedExternalEditor ?? 'external editor'}`,
+          ? t('menu.repository.openExternalEditor.darwin', {
+              name: selectedExternalEditor ?? 'External Editor',
+            })
+          : t('menu.repository.openExternalEditor.other', {
+              name: selectedExternalEditor ?? 'external editor',
+            }),
         id: 'open-external-editor',
         accelerator: 'CmdOrCtrl+Shift+A',
         click: emit('open-external-editor'),
       },
       {
-        label: __DARWIN__ ? 'Open With…' : 'Open &with…',
+        label: __DARWIN__
+          ? t('menu.repository.openWith.darwin')
+          : t('menu.repository.openWith.other'),
         id: 'open-with-external-editor',
         accelerator: 'CmdOrCtrl+Shift+Alt+A',
         click: emit('open-with-external-editor'),
@@ -371,14 +438,16 @@ export function buildDefaultMenu({
       {
         id: 'create-issue-in-repository-on-github',
         label: __DARWIN__
-          ? 'Create Issue on GitHub'
-          : 'Create &issue on GitHub',
+          ? t('menu.repository.createIssue.darwin')
+          : t('menu.repository.createIssue.other'),
         accelerator: 'CmdOrCtrl+I',
         click: emit('create-issue-in-repository-on-github'),
       },
       separator,
       {
-        label: __DARWIN__ ? 'Repository Settings…' : 'Repository &settings…',
+        label: __DARWIN__
+          ? t('menu.repository.settings.darwin')
+          : t('menu.repository.settings.other'),
         id: 'show-repository-settings',
         click: emit('show-repository-settings'),
       },
@@ -387,26 +456,34 @@ export function buildDefaultMenu({
 
   const branchSubmenu = [
     {
-      label: __DARWIN__ ? 'New Branch…' : 'New &branch…',
+      label: __DARWIN__
+        ? t('menu.branch.newBranch.darwin')
+        : t('menu.branch.newBranch.other'),
       id: 'create-branch',
       accelerator: 'CmdOrCtrl+Shift+N',
       click: emit('create-branch'),
     },
     {
-      label: __DARWIN__ ? 'Rename…' : '&Rename…',
+      label: __DARWIN__
+        ? t('menu.branch.rename.darwin')
+        : t('menu.branch.rename.other'),
       id: 'rename-branch',
       accelerator: 'CmdOrCtrl+Shift+R',
       click: emit('rename-branch'),
     },
     {
-      label: __DARWIN__ ? 'Delete…' : '&Delete…',
+      label: __DARWIN__
+        ? t('menu.branch.delete.darwin')
+        : t('menu.branch.delete.other'),
       id: 'delete-branch',
       accelerator: 'CmdOrCtrl+Shift+D',
       click: emit('delete-branch'),
     },
     separator,
     {
-      label: __DARWIN__ ? 'Discard All Changes…' : 'Discard all changes…',
+      label: __DARWIN__
+        ? t('menu.branch.discardAllChanges.darwin')
+        : t('menu.branch.discardAllChanges.other'),
       id: 'discard-all-changes',
       accelerator: 'CmdOrCtrl+Shift+Backspace',
       click: emit('discard-all-changes'),
@@ -422,49 +499,61 @@ export function buildDefaultMenu({
     separator,
     {
       label: __DARWIN__
-        ? `Update from ${contributionTargetDefaultBranch}`
-        : `&Update from ${contributionTargetDefaultBranch}`,
+        ? t('menu.branch.updateFrom.darwin', {
+            branch: contributionTargetDefaultBranch,
+          })
+        : t('menu.branch.updateFrom.other', {
+            branch: contributionTargetDefaultBranch,
+          }),
       id: 'update-branch-with-contribution-target-branch',
       accelerator: 'CmdOrCtrl+Shift+U',
       click: emit('update-branch-with-contribution-target-branch'),
     },
     {
-      label: __DARWIN__ ? 'Compare to Branch' : '&Compare to branch',
+      label: __DARWIN__
+        ? t('menu.branch.compareToBranch.darwin')
+        : t('menu.branch.compareToBranch.other'),
       id: 'compare-to-branch',
       accelerator: 'CmdOrCtrl+Shift+B',
       click: emit('compare-to-branch'),
     },
     {
       label: __DARWIN__
-        ? 'Merge into Current Branch…'
-        : '&Merge into current branch…',
+        ? t('menu.branch.mergeIntoCurrent.darwin')
+        : t('menu.branch.mergeIntoCurrent.other'),
       id: 'merge-branch',
       accelerator: 'CmdOrCtrl+Shift+M',
       click: emit('merge-branch'),
     },
     {
       label: __DARWIN__
-        ? 'Squash and Merge into Current Branch…'
-        : 'Squas&h and merge into current branch…',
+        ? t('menu.branch.squashAndMergeIntoCurrent.darwin')
+        : t('menu.branch.squashAndMergeIntoCurrent.other'),
       id: 'squash-and-merge-branch',
       accelerator: 'CmdOrCtrl+Shift+H',
       click: emit('squash-and-merge-branch'),
     },
     {
-      label: __DARWIN__ ? 'Rebase Current Branch…' : 'R&ebase current branch…',
+      label: __DARWIN__
+        ? t('menu.branch.rebaseCurrent.darwin')
+        : t('menu.branch.rebaseCurrent.other'),
       id: 'rebase-branch',
       accelerator: 'CmdOrCtrl+Shift+E',
       click: emit('rebase-branch'),
     },
     separator,
     {
-      label: __DARWIN__ ? 'Compare on GitHub' : 'Compare on &GitHub',
+      label: __DARWIN__
+        ? t('menu.branch.compareOnGitHub.darwin')
+        : t('menu.branch.compareOnGitHub.other'),
       id: 'compare-on-github',
       accelerator: 'CmdOrCtrl+Shift+C',
       click: emit('compare-on-github'),
     },
     {
-      label: __DARWIN__ ? 'View Branch on GitHub' : 'View branch on GitHub',
+      label: __DARWIN__
+        ? t('menu.branch.viewBranchOnGitHub.darwin')
+        : t('menu.branch.viewBranchOnGitHub.other'),
       id: 'branch-on-github',
       accelerator: 'CmdOrCtrl+Alt+B',
       click: emit('branch-on-github'),
@@ -472,7 +561,9 @@ export function buildDefaultMenu({
   ]
 
   branchSubmenu.push({
-    label: __DARWIN__ ? 'Preview Pull Request' : 'Preview pull request',
+    label: __DARWIN__
+      ? t('menu.branch.previewPullRequest.darwin')
+      : t('menu.branch.previewPullRequest.other'),
     id: 'preview-pull-request',
     accelerator: 'CmdOrCtrl+Alt+P',
     click: emit('preview-pull-request'),
@@ -486,7 +577,7 @@ export function buildDefaultMenu({
   })
 
   template.push({
-    label: __DARWIN__ ? 'Branch' : '&Branch',
+    label: __DARWIN__ ? t('menu.branch.darwin') : t('menu.branch.other'),
     id: 'branch',
     submenu: branchSubmenu,
   })
@@ -505,7 +596,9 @@ export function buildDefaultMenu({
   }
 
   const submitIssueItem: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__ ? 'Report Issue…' : 'Report issue…',
+    label: __DARWIN__
+      ? t('menu.help.reportIssue.darwin')
+      : t('menu.help.reportIssue.other'),
     click() {
       shell
         .openExternal('https://github.com/desktop/desktop/issues/new/choose')
@@ -514,7 +607,9 @@ export function buildDefaultMenu({
   }
 
   const contactSupportItem: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__ ? 'Contact GitHub Support…' : '&Contact GitHub support…',
+    label: __DARWIN__
+      ? t('menu.help.contactSupport.darwin')
+      : t('menu.help.contactSupport.other'),
     click() {
       shell
         .openExternal(
@@ -525,7 +620,7 @@ export function buildDefaultMenu({
   }
 
   const showUserGuides: Electron.MenuItemConstructorOptions = {
-    label: 'Show User Guides',
+    label: t('menu.help.showUserGuides'),
     click() {
       shell
         .openExternal('https://docs.github.com/en/desktop')
@@ -534,7 +629,9 @@ export function buildDefaultMenu({
   }
 
   const showKeyboardShortcuts: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__ ? 'Show Keyboard Shortcuts' : 'Show keyboard shortcuts',
+    label: __DARWIN__
+      ? t('menu.help.showKeyboardShortcuts.darwin')
+      : t('menu.help.showKeyboardShortcuts.other'),
     click() {
       shell
         .openExternal(
@@ -545,10 +642,10 @@ export function buildDefaultMenu({
   }
 
   const showLogsLabel = __DARWIN__
-    ? 'Show Logs in Finder'
+    ? t('menu.help.showLogs.darwin')
     : __WIN32__
-    ? 'S&how logs in Explorer'
-    : 'S&how logs in your File Manager'
+    ? t('menu.help.showLogs.win32')
+    : t('menu.help.showLogs.other')
 
   const showLogsItem: Electron.MenuItemConstructorOptions = {
     label: showLogsLabel,
@@ -577,12 +674,12 @@ export function buildDefaultMenu({
     })
   } else {
     template.push({
-      label: '&Help',
+      label: t('menu.help.other'),
       submenu: [
         ...helpItems,
         separator,
         {
-          label: '&About GitHub Desktop',
+          label: t('menu.help.about.other'),
           click: emit('show-about'),
           id: 'about',
         },
@@ -600,22 +697,32 @@ function getPushLabel(
   askForConfirmationOnForcePush: boolean
 ): string {
   if (!isForcePushForCurrentRepository) {
-    return __DARWIN__ ? 'Push' : 'P&ush'
+    return __DARWIN__
+      ? t('menu.repository.push.darwin')
+      : t('menu.repository.push.other')
   }
 
   if (askForConfirmationOnForcePush) {
-    return __DARWIN__ ? 'Force Push…' : 'Force P&ush…'
+    return __DARWIN__
+      ? t('menu.repository.forcePushConfirm.darwin')
+      : t('menu.repository.forcePushConfirm.other')
   }
 
-  return __DARWIN__ ? 'Force Push' : 'Force P&ush'
+  return __DARWIN__
+    ? t('menu.repository.forcePush.darwin')
+    : t('menu.repository.forcePush.other')
 }
 
 function getStashedChangesLabel(isStashedChangesVisible: boolean): string {
   if (isStashedChangesVisible) {
-    return __DARWIN__ ? 'Hide Stashed Changes' : 'H&ide stashed changes'
+    return __DARWIN__
+      ? t('menu.view.hideStashedChanges.darwin')
+      : t('menu.view.hideStashedChanges.other')
   }
 
-  return __DARWIN__ ? 'Show Stashed Changes' : 'Sho&w stashed changes'
+  return __DARWIN__
+    ? t('menu.view.showStashedChanges.darwin')
+    : t('menu.view.showStashedChanges.other')
 }
 
 type ClickHandler = (

@@ -105,6 +105,7 @@ import { OversizedFiles } from './changes/oversized-files-warning'
 import { PushNeedsPullWarning } from './push-needs-pull'
 import { getCurrentBranchForcePushState } from '../lib/rebase'
 import { Banner, BannerType } from '../models/banner'
+import { getStoredLocalePreference } from '../lib/i18n'
 import { StashAndSwitchBranch } from './stash-changes/stash-and-switch-branch-dialog'
 import { OverwriteStash } from './stash-changes/overwrite-stashed-changes-dialog'
 import { ConfirmDiscardStashDialog } from './stashing/confirm-discard-stash'
@@ -1589,6 +1590,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             selectedShell={this.state.selectedShell}
             selectedTheme={this.state.selectedTheme}
             selectedTabSize={this.state.selectedTabSize}
+            selectedLocale={getStoredLocalePreference()}
             useCustomEditor={this.state.useCustomEditor}
             customEditor={this.state.customEditor}
             useCustomShell={this.state.useCustomShell}

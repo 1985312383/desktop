@@ -9,9 +9,9 @@ import {
   parseCustomIntegrationArguments,
   TargetPathArgument,
 } from '../../lib/custom-integration'
+import { t } from '../../lib/i18n'
 
 interface ICustomIntegrationFormProps {
-  /** ID used to prefix the IDs of some child elements */
   readonly id: string
   readonly path: string
   readonly arguments: string
@@ -22,22 +22,13 @@ interface ICustomIntegrationFormProps {
 interface ICustomIntegrationFormState {
   readonly path: string
   readonly arguments: string
-  /** Whether or not the current path is valid */
   readonly isValidPath: boolean
-  /** Whether or not to show a warning for an invalid path */
   readonly showNonValidPathWarning: boolean
-  /** Whether or not the current arguments are valid */
   readonly isValidArgs: boolean
-  /** Whether or not to show an error for invalid arguments */
   readonly showNonValidArgsError: boolean
-  /**
-   * Whether or not to show an error for missing target path placeholder among
-   * the arguments.
-   */
   readonly showNoRepoPathArgError: boolean
 }
 
-/** A form for configuring a custom integration, with a path and arguments. */
 export class CustomIntegrationForm extends React.Component<
   ICustomIntegrationFormProps,
   ICustomIntegrationFormState
@@ -58,7 +49,6 @@ export class CustomIntegrationForm extends React.Component<
     }
   }
 
-  /** Focuses the path text box. */
   public focus() {
     this.pathInputRef.current?.focus()
   }
@@ -68,21 +58,25 @@ export class CustomIntegrationForm extends React.Component<
       <div className="custom-integration-form-container">
         <div className="custom-integration-form-path-container">
           <TextBox
-            label="Path"
+            label={t('preferences.integrations.custom.path')}
             value={this.state.path}
             ref={this.pathInputRef}
             onValueChanged={this.onPathChanged}
-            placeholder="Path to executable"
+            placeholder={t('preferences.integrations.custom.pathPlaceholder')}
             ariaDescribedBy={`${this.props.id}-custom-integration-path-error`}
           />
-          <Button onClick={this.onChoosePath}>Choose…</Button>
+          <Button onClick={this.onChoosePath}>
+            {t('preferences.integrations.custom.choose')}
+          </Button>
         </div>
         {this.renderPathErrors()}
         <TextBox
-          label="Arguments"
+          label={t('preferences.integrations.custom.arguments')}
           value={this.state.arguments}
           onValueChanged={this.onParamsChanged}
-          placeholder="Command line arguments"
+          placeholder={t(
+            'preferences.integrations.custom.argumentsPlaceholder'
+          )}
           ariaDescribedBy={`${this.props.id}-custom-integration-args-error`}
         />
         {this.renderArgsErrors()}
@@ -95,8 +89,7 @@ export class CustomIntegrationForm extends React.Component<
       return null
     }
 
-    const errorDescription =
-      'This path does not appear to be a valid executable.'
+    const errorDescription = t('preferences.integrations.custom.invalidPath')
 
     return (
       <div className="custom-integration-form-error">
@@ -120,8 +113,10 @@ export class CustomIntegrationForm extends React.Component<
     }
 
     const errorDescription = this.state.showNonValidArgsError
-      ? 'These arguments are not valid.'
-      : `Arguments must include the target path placeholder (${TargetPathArgument}).`
+      ? t('preferences.integrations.custom.invalidArguments')
+      : t('preferences.integrations.custom.missingTargetPath', {
+          placeholder: TargetPathArgument,
+        })
 
     return (
       <div className="custom-integration-form-error">
@@ -137,8 +132,6 @@ export class CustomIntegrationForm extends React.Component<
   }
 
   private onChoosePath = async () => {
-    // On macOS we also want to allow selecting directories, since apps on macOS
-    // are usually directories (e.g. apps on /Applications).
     const path = await showOpenDialog({
       properties: __DARWIN__ ? ['openFile', 'openDirectory'] : ['openFile'],
     })

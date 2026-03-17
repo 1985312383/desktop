@@ -57,6 +57,14 @@ import {
   setGitHookEnvShell,
   setHooksEnvEnabled,
 } from '../../lib/hooks/config'
+import {
+  LocalePreference,
+  getStoredLocalePreference,
+  initializeLocale,
+  setStoredLocalePreference,
+  t,
+} from '../../lib/i18n'
+import { setPreferredLocale } from '../main-process-proxy'
 
 interface IPreferencesProps {
   readonly dispatcher: Dispatcher
@@ -83,6 +91,7 @@ interface IPreferencesProps {
   readonly selectedShell: Shell
   readonly selectedTheme: ApplicationTheme
   readonly selectedTabSize: number
+  readonly selectedLocale: LocalePreference
   readonly useCustomEditor: boolean
   readonly customEditor: ICustomIntegration | null
   readonly useCustomShell: boolean
@@ -138,6 +147,8 @@ interface IPreferencesState {
 
   readonly initiallySelectedTheme: ApplicationTheme
   readonly initiallySelectedTabSize: number
+  readonly selectedLocale: LocalePreference
+  readonly initiallySelectedLocale: LocalePreference
 
   readonly isLoadingGitConfig: boolean
 
@@ -206,6 +217,8 @@ export class Preferences extends React.Component<
       repositoryIndicatorsEnabled: this.props.repositoryIndicatorsEnabled,
       initiallySelectedTheme: this.props.selectedTheme,
       initiallySelectedTabSize: this.props.selectedTabSize,
+      selectedLocale: this.props.selectedLocale,
+      initiallySelectedLocale: this.props.selectedLocale,
       isLoadingGitConfig: true,
       underlineLinks: this.props.underlineLinks,
       showDiffCheckMarks: this.props.showDiffCheckMarks,
@@ -284,7 +297,22 @@ export class Preferences extends React.Component<
     })
   }
 
+  public componentDidUpdate(prevProps: IPreferencesProps) {
+    if (
+      prevProps.selectedLocale !== this.props.selectedLocale &&
+      this.state.selectedLocale === prevProps.selectedLocale &&
+      this.state.initiallySelectedLocale === prevProps.selectedLocale
+    ) {
+      this.setState({
+        selectedLocale: this.props.selectedLocale,
+        initiallySelectedLocale: this.props.selectedLocale,
+      })
+    }
+  }
+
   private onCancel = () => {
+    this.applyRendererLocale(this.state.initiallySelectedLocale)
+
     if (this.state.initiallySelectedTheme !== this.props.selectedTheme) {
       this.onSelectedThemeChanged(this.state.initiallySelectedTheme)
     }
@@ -299,7 +327,11 @@ export class Preferences extends React.Component<
     return (
       <Dialog
         id="preferences"
-        title={__DARWIN__ ? 'Settings' : 'Options'}
+        title={
+          __DARWIN__
+            ? t('preferences.title.darwin')
+            : t('preferences.title.other')
+        }
         onDismissed={this.onCancel}
         onSubmit={this.onSave}
       >
@@ -312,35 +344,35 @@ export class Preferences extends React.Component<
           >
             <span id={this.getTabId(PreferencesTab.Accounts)}>
               <Octicon className="icon" symbol={octicons.home} />
-              Accounts
+              {t('preferences.tab.accounts')}
             </span>
             <span id={this.getTabId(PreferencesTab.Integrations)}>
               <Octicon className="icon" symbol={octicons.person} />
-              Integrations
+              {t('preferences.tab.integrations')}
             </span>
             <span id={this.getTabId(PreferencesTab.Git)}>
               <Octicon className="icon" symbol={octicons.gitCommit} />
-              Git
+              {t('preferences.tab.git')}
             </span>
             <span id={this.getTabId(PreferencesTab.Appearance)}>
               <Octicon className="icon" symbol={octicons.paintbrush} />
-              Appearance
+              {t('preferences.tab.appearance')}
             </span>
             <span id={this.getTabId(PreferencesTab.Notifications)}>
               <Octicon className="icon" symbol={octicons.bell} />
-              Notifications
+              {t('preferences.tab.notifications')}
             </span>
             <span id={this.getTabId(PreferencesTab.Prompts)}>
               <Octicon className="icon" symbol={octicons.question} />
-              Prompts
+              {t('preferences.tab.prompts')}
             </span>
             <span id={this.getTabId(PreferencesTab.Advanced)}>
               <Octicon className="icon" symbol={octicons.gear} />
-              Advanced
+              {t('preferences.tab.advanced')}
             </span>
             <span id={this.getTabId(PreferencesTab.Accessibility)}>
               <Octicon className="icon" symbol={octicons.accessibility} />
-              Accessibility
+              {t('preferences.tab.accessibility')}
             </span>
           </TabBar>
 
@@ -512,6 +544,8 @@ export class Preferences extends React.Component<
             onSelectedThemeChanged={this.onSelectedThemeChanged}
             selectedTabSize={this.props.selectedTabSize}
             onSelectedTabSizeChanged={this.onSelectedTabSizeChanged}
+            selectedLocale={this.state.selectedLocale}
+            onSelectedLocaleChanged={this.onSelectedLocaleChanged}
           />
         )
         break
@@ -749,16 +783,28 @@ export class Preferences extends React.Component<
     this.props.dispatcher.setSelectedTabSize(tabSize)
   }
 
+  private onSelectedLocaleChanged = (selectedLocale: LocalePreference) => {
+    this.applyRendererLocale(selectedLocale)
+    this.setState({ selectedLocale })
+  }
+
+  private applyRendererLocale(locale: LocalePreference) {
+    initializeLocale({
+      preferredLocale: locale,
+      systemLocale: navigator.language,
+    })
+  }
+
   private renderFooter() {
     const hasDisabledError = this.state.disallowedCharactersMessage != null
 
     return (
-      <DialogFooter>
-        <OkCancelButtonGroup
-          okButtonText="Save"
-          okButtonDisabled={hasDisabledError}
-        />
-      </DialogFooter>
+        <DialogFooter>
+          <OkCancelButtonGroup
+            okButtonText={t('preferences.save')}
+            okButtonDisabled={hasDisabledError}
+          />
+        </DialogFooter>
     )
   }
 
@@ -908,6 +954,16 @@ export class Preferences extends React.Component<
     dispatcher.setUnderlineLinksSetting(this.state.underlineLinks)
 
     dispatcher.setDiffCheckMarksSetting(this.state.showDiffCheckMarks)
+
+    const storedLocalePreference = getStoredLocalePreference()
+
+    if (this.state.selectedLocale !== storedLocalePreference) {
+      this.applyRendererLocale(this.state.selectedLocale)
+      setStoredLocalePreference(this.state.selectedLocale)
+      setPreferredLocale(this.state.selectedLocale)
+      window.location.reload()
+      return
+    }
 
     this.props.onDismissed()
   }

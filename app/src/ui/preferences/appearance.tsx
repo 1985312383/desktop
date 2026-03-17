@@ -10,17 +10,25 @@ import { RadioGroup } from '../lib/radio-group'
 import { Select } from '../lib/select'
 import { encodePathAsUrl } from '../../lib/path'
 import { tabSizeDefault } from '../../lib/stores/app-store'
+import {
+  LocalePreference,
+  resolveLocalePreference,
+  t,
+} from '../../lib/i18n'
 
 interface IAppearanceProps {
   readonly selectedTheme: ApplicationTheme
   readonly onSelectedThemeChanged: (theme: ApplicationTheme) => void
   readonly selectedTabSize: number
   readonly onSelectedTabSizeChanged: (tabSize: number) => void
+  readonly selectedLocale: LocalePreference
+  readonly onSelectedLocaleChanged: (locale: LocalePreference) => void
 }
 
 interface IAppearanceState {
   readonly selectedTheme: ApplicationTheme | null
   readonly selectedTabSize: number
+  readonly selectedLocale: LocalePreference
 }
 
 export class Appearance extends React.Component<
@@ -37,6 +45,7 @@ export class Appearance extends React.Component<
     this.state = {
       selectedTheme: usePropTheme ? props.selectedTheme : null,
       selectedTabSize: props.selectedTabSize,
+      selectedLocale: props.selectedLocale,
     }
 
     if (!usePropTheme) {
@@ -58,14 +67,16 @@ export class Appearance extends React.Component<
       : await getCurrentlyAppliedTheme()
 
     const selectedTabSize = this.props.selectedTabSize
+    const selectedLocale = this.props.selectedLocale
 
-    this.setState({ selectedTheme, selectedTabSize })
+    this.setState({ selectedTheme, selectedTabSize, selectedLocale })
   }
 
   private initializeSelectedTheme = async () => {
     const selectedTheme = await getCurrentlyAppliedTheme()
     const selectedTabSize = this.props.selectedTabSize
-    this.setState({ selectedTheme, selectedTabSize })
+    const selectedLocale = this.props.selectedLocale
+    this.setState({ selectedTheme, selectedTabSize, selectedLocale })
   }
 
   private onSelectedThemeChanged = (theme: ApplicationTheme) => {
@@ -78,6 +89,17 @@ export class Appearance extends React.Component<
     this.props.onSelectedTabSizeChanged(parseInt(event.currentTarget.value))
   }
 
+  private onSelectedLocaleChanged = (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    const value = event.currentTarget.value
+    const selectedLocale =
+      value === 'system' ? null : resolveLocalePreference(value)
+
+    this.setState({ selectedLocale })
+    this.props.onSelectedLocaleChanged(selectedLocale)
+  }
+
   public renderThemeSwatch = (theme: ApplicationTheme) => {
     const darkThemeImage = encodePathAsUrl(__dirname, 'static/ghd_dark.svg')
     const lightThemeImage = encodePathAsUrl(__dirname, 'static/ghd_light.svg')
@@ -87,21 +109,21 @@ export class Appearance extends React.Component<
         return (
           <span>
             <img src={lightThemeImage} alt="" />
-            <span className="theme-value-label">Light</span>
+            <span className="theme-value-label">
+              {t('preferences.appearance.theme.light')}
+            </span>
           </span>
         )
       case ApplicationTheme.Dark:
         return (
           <span>
             <img src={darkThemeImage} alt="" />
-            <span className="theme-value-label">Dark</span>
+            <span className="theme-value-label">
+              {t('preferences.appearance.theme.dark')}
+            </span>
           </span>
         )
       case ApplicationTheme.System:
-        /** Why three images? The system theme swatch uses the first image
-         * positioned relatively to get the label container size and uses the
-         * second and third positioned absolutely over first and third one
-         * clipped in half to render a split dark and light theme swatch. */
         return (
           <span>
             <span className="system-theme-swatch">
@@ -109,7 +131,9 @@ export class Appearance extends React.Component<
               <img src={lightThemeImage} alt="" />
               <img src={darkThemeImage} alt="" />
             </span>
-            <span className="theme-value-label">System</span>
+            <span className="theme-value-label">
+              {t('preferences.appearance.theme.system')}
+            </span>
           </span>
         )
     }
@@ -119,7 +143,7 @@ export class Appearance extends React.Component<
     const selectedTheme = this.state.selectedTheme
 
     if (selectedTheme == null) {
-      return <Row>Loading system theme</Row>
+      return <Row>{t('preferences.appearance.loadingTheme')}</Row>
     }
 
     const themes = [
@@ -130,7 +154,7 @@ export class Appearance extends React.Component<
 
     return (
       <div className="appearance-section">
-        <h2 id="theme-heading">Theme</h2>
+        <h2 id="theme-heading">{t('preferences.appearance.theme.heading')}</h2>
 
         <RadioGroup<ApplicationTheme>
           ariaLabelledBy="theme-heading"
@@ -149,18 +173,52 @@ export class Appearance extends React.Component<
 
     return (
       <div className="appearance-section">
-        <h2 id="diff-heading">{'Diff'}</h2>
+        <h2 id="diff-heading">{t('preferences.appearance.diff.heading')}</h2>
 
         <Select
           value={this.state.selectedTabSize.toString()}
-          label={__DARWIN__ ? 'Tab Size' : 'Tab size'}
+          label={
+            __DARWIN__
+              ? t('preferences.appearance.tabSize.darwin')
+              : t('preferences.appearance.tabSize.other')
+          }
           onChange={this.onSelectedTabSizeChanged}
         >
           {availableTabSizes.map(n => (
             <option key={n} value={n}>
-              {n === tabSizeDefault ? `${n} (default)` : n}
+              {n === tabSizeDefault
+                ? t('preferences.appearance.tabSize.default', { size: n })
+                : n}
             </option>
           ))}
+        </Select>
+      </div>
+    )
+  }
+
+  private renderSelectedLanguage() {
+    const selectedLocale = this.state.selectedLocale ?? 'system'
+
+    return (
+      <div className="appearance-section">
+        <h2 id="language-heading">
+          {t('preferences.appearance.language.heading')}
+        </h2>
+
+        <Select
+          value={selectedLocale}
+          label={t('preferences.appearance.language.label')}
+          onChange={this.onSelectedLocaleChanged}
+        >
+          <option value="system">
+            {t('preferences.appearance.language.system')}
+          </option>
+          <option value="en">
+            {t('preferences.appearance.language.english')}
+          </option>
+          <option value="zh-CN">
+            {t('preferences.appearance.language.simplifiedChinese')}
+          </option>
         </Select>
       </div>
     )
@@ -170,6 +228,7 @@ export class Appearance extends React.Component<
     return (
       <DialogContent>
         {this.renderSelectedTheme()}
+        {this.renderSelectedLanguage()}
         {this.renderSelectedTabSize()}
       </DialogContent>
     )

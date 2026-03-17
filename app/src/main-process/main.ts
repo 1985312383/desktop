@@ -51,10 +51,14 @@ import {
 import { initializeDesktopNotifications } from './notifications'
 import parseCommandLineArgs from 'minimist'
 import { CLIAction } from '../lib/cli-action'
-import { initializeLocale } from '../lib/i18n'
+import { initializeLocale, resolveLocalePreference } from '../lib/i18n'
+import { MenuLabelsEvent } from '../models/menu-labels'
+import {
+  getStoredLocalePreferenceForMain,
+  setStoredLocalePreferenceForMain,
+} from './locale-preference-store'
 
 app.setAppLogsPath()
-initializeLocale({ systemLocale: app.getLocale() })
 enableSourceMaps()
 
 let mainWindow: AppWindow | null = null
@@ -63,6 +67,16 @@ const launchTime = now()
 
 let preventQuit = false
 let readyTime: number | null = null
+let currentMenuLabels: MenuLabelsEvent = {
+  selectedShell: null,
+  selectedExternalEditor: null,
+  askForConfirmationOnRepositoryRemoval: false,
+  askForConfirmationOnForcePush: false,
+}
+
+function getSystemLocale() {
+  return app.getPreferredSystemLanguages()[0] ?? app.getLocale()
+}
 
 type OnDidLoadFn = (window: AppWindow) => void
 /** See the `onDidLoad` function. */
@@ -98,6 +112,52 @@ function getExtraErrorContext(): Record<string, string> {
   return {
     uptime: getUptimeInSeconds().toFixed(3),
     time: new Date().toString(),
+  }
+}
+
+function refreshApplicationMenu(labels: MenuLabelsEvent) {
+  const newMenu = buildDefaultMenu(labels)
+  const currentMenu = Menu.getApplicationMenu()
+
+  if (currentMenu === null) {
+    Menu.setApplicationMenu(newMenu)
+
+    if (mainWindow !== null) {
+      mainWindow.sendAppMenu()
+    }
+
+    return
+  }
+
+  let menuHasChanged = false
+
+  for (const newItem of getAllMenuItems(newMenu)) {
+    const id = (newItem as any).id
+
+    if (!id) {
+      continue
+    }
+
+    const currentItem = currentMenu.getMenuItemById(id)
+
+    if (!currentItem) {
+      menuHasChanged = true
+      continue
+    }
+
+    if (currentItem.label !== newItem.label) {
+      menuHasChanged = true
+    }
+
+    if (currentItem.enabled !== newItem.enabled) {
+      newItem.enabled = currentItem.enabled
+      menuHasChanged = true
+    }
+  }
+
+  if (menuHasChanged && mainWindow) {
+    Menu.setApplicationMenu(newMenu)
+    mainWindow.sendAppMenu()
   }
 }
 
@@ -331,6 +391,10 @@ app.on('ready', () => {
   }
 
   readyTime = now() - launchTime
+  initializeLocale({
+    preferredLocale: getStoredLocalePreferenceForMain(),
+    systemLocale: getSystemLocale(),
+  })
 
   possibleProtocols.forEach(protocol => setAsDefaultProtocolClient(protocol))
 
@@ -352,86 +416,26 @@ app.on('ready', () => {
   const updateAccounts = installAuthenticatedImageFilter(orderedWebRequest)
 
   Menu.setApplicationMenu(
-    buildDefaultMenu({
-      selectedShell: null,
-      selectedExternalEditor: null,
-      askForConfirmationOnRepositoryRemoval: false,
-      askForConfirmationOnForcePush: false,
-    })
+    buildDefaultMenu(currentMenuLabels)
   )
 
   ipcMain.on('update-accounts', (_, accounts) => updateAccounts(accounts))
 
   ipcMain.on('update-preferred-app-menu-item-labels', (_, labels) => {
-    // The current application menu is mutable and we frequently
-    // change whether particular items are enabled or not through
-    // the update-menu-state IPC event. This menu that we're creating
-    // now will have all the items enabled so we need to merge the
-    // current state with the new in order to not get a temporary
-    // race conditions where menu items which shouldn't be enabled
-    // are.
-    const newMenu = buildDefaultMenu(labels)
+    currentMenuLabels = labels
+    refreshApplicationMenu(labels)
+  })
 
-    const currentMenu = Menu.getApplicationMenu()
+  ipcMain.on('set-preferred-locale', (_, preferredLocale) => {
+    const localePreference = resolveLocalePreference(preferredLocale)
 
-    // This shouldn't happen but whenever one says that it does
-    // so here's the escape hatch when we can't merge the current
-    // menu with the new one; we just use the new one.
-    if (currentMenu === null) {
-      // https://github.com/electron/electron/issues/2717
-      Menu.setApplicationMenu(newMenu)
+    setStoredLocalePreferenceForMain(localePreference)
+    initializeLocale({
+      preferredLocale: localePreference,
+      systemLocale: getSystemLocale(),
+    })
 
-      if (mainWindow !== null) {
-        mainWindow.sendAppMenu()
-      }
-
-      return
-    }
-
-    // It's possible that after rebuilding the menu we'll end up
-    // with the exact same structural menu as we had before so we
-    // keep track of whether anything has actually changed in order
-    // to avoid updating the global menu and telling the renderer
-    // about it.
-    let menuHasChanged = false
-
-    for (const newItem of getAllMenuItems(newMenu)) {
-      // Our menu items always have ids and Electron.MenuItem takes on whatever
-      // properties was defined on the MenuItemOptions template used to create it
-      // but doesn't surface those in the type declaration.
-      const id = (newItem as any).id
-
-      if (!id) {
-        continue
-      }
-
-      const currentItem = currentMenu.getMenuItemById(id)
-
-      // Unfortunately the type information for getMenuItemById
-      // doesn't specify if it'll return null or undefined when
-      // the item doesn't exist so we'll do a falsy check here.
-      if (!currentItem) {
-        menuHasChanged = true
-      } else {
-        if (currentItem.label !== newItem.label) {
-          menuHasChanged = true
-        }
-
-        // Copy the enabled property from the existing menu
-        // item since it'll be the most recent reflection of
-        // what the renderer wants.
-        if (currentItem.enabled !== newItem.enabled) {
-          newItem.enabled = currentItem.enabled
-          menuHasChanged = true
-        }
-      }
-    }
-
-    if (menuHasChanged && mainWindow) {
-      // https://github.com/electron/electron/issues/2717
-      Menu.setApplicationMenu(newMenu)
-      mainWindow.sendAppMenu()
-    }
+    refreshApplicationMenu(currentMenuLabels)
   })
 
   /**

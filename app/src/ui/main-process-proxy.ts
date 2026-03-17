@@ -331,6 +331,9 @@ export const updatePreferredAppMenuItemLabels = sendProxy(
   1
 )
 
+/** Update the preferred application locale in the main process. */
+export const setPreferredLocale = sendProxy('set-preferred-locale', 1)
+
 function getIpcFriendlyError(error: Error) {
   return {
     message: error.message || `${error}`,

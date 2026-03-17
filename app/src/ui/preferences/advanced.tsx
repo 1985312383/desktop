@@ -4,6 +4,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { LinkButton } from '../lib/link-button'
 import { SamplesURL } from '../../lib/stats'
 import { isWindowsOpenSSHAvailable } from '../../lib/ssh/ssh'
+import { t } from '../../lib/i18n'
 
 interface IAdvancedPreferencesProps {
   readonly useWindowsOpenSSH: boolean
@@ -77,8 +78,10 @@ export class Advanced extends React.Component<
   private reportDesktopUsageLabel() {
     return (
       <span>
-        Help GitHub Desktop improve by submitting{' '}
-        <LinkButton uri={SamplesURL}>usage stats</LinkButton>
+        {t('preferences.advanced.usage.labelPrefix')}{' '}
+        <LinkButton uri={SamplesURL}>
+          {t('preferences.advanced.usage.link')}
+        </LinkButton>
       </span>
     )
   }
@@ -87,9 +90,9 @@ export class Advanced extends React.Component<
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>Background updates</h2>
+          <h2>{t('preferences.advanced.backgroundUpdates.heading')}</h2>
           <Checkbox
-            label="Show status icons in the repository list"
+            label={t('preferences.advanced.backgroundUpdates.showStatusIcons')}
             value={
               this.props.repositoryIndicatorsEnabled
                 ? CheckboxValue.On
@@ -102,20 +105,12 @@ export class Advanced extends React.Component<
             id="periodic-fetch-description"
             className="git-settings-description"
           >
-            <p>
-              These icons indicate which repositories have local or remote
-              changes, and require the periodic fetching of repositories that
-              are not currently selected.
-            </p>
-            <p>
-              Turning this off will not stop the periodic fetching of your
-              currently selected repository, but may improve overall app
-              performance for users with many repositories.
-            </p>
+            <p>{t('preferences.advanced.backgroundUpdates.description.one')}</p>
+            <p>{t('preferences.advanced.backgroundUpdates.description.two')}</p>
           </div>
         </div>
         <div className="advanced-section">
-          <h2>Usage</h2>
+          <h2>{t('preferences.advanced.usage.heading')}</h2>
           <Checkbox
             label={this.reportDesktopUsageLabel()}
             value={
@@ -126,11 +121,11 @@ export class Advanced extends React.Component<
             onChange={this.onReportingOptOutChanged}
           />
         </div>
-        <h2>Network and credentials</h2>
+        <h2>{t('preferences.advanced.network.heading')}</h2>
         {this.renderSSHSettings()}
         <div className="advanced-section">
           <Checkbox
-            label={'Use Git Credential Manager'}
+            label={t('preferences.advanced.network.useGcm')}
             value={
               this.state.useExternalCredentialHelper
                 ? CheckboxValue.On
@@ -144,12 +139,11 @@ export class Advanced extends React.Component<
             className="git-settings-description"
           >
             <p>
-              Use{' '}
+              {t('preferences.advanced.network.useGcmDescription.prefix')}{' '}
               <LinkButton uri="https://gh.io/gcm">
-                Git Credential Manager{' '}
+                {t('preferences.advanced.network.useGcmDescription.link')}
               </LinkButton>{' '}
-              for private repositories outside of GitHub.com. This feature is
-              experimental and subject to change.
+              {t('preferences.advanced.network.useGcmDescription.suffix')}
             </p>
           </div>
         </div>
@@ -165,7 +159,7 @@ export class Advanced extends React.Component<
     return (
       <div className="advanced-section">
         <Checkbox
-          label="Use system OpenSSH (recommended)"
+          label={t('preferences.advanced.network.useSystemSsh')}
           value={
             this.props.useWindowsOpenSSH ? CheckboxValue.On : CheckboxValue.Off
           }

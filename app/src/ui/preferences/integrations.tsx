@@ -8,6 +8,7 @@ import { suggestedExternalEditor } from '../../lib/editors/shared'
 import { CustomIntegrationForm } from './custom-integration-form'
 import { ICustomIntegration } from '../../lib/custom-integration'
 import { enableCustomIntegration } from '../../lib/feature-flag'
+import { t } from '../../lib/i18n'
 
 const CustomIntegrationValue = 'other'
 
@@ -100,11 +101,6 @@ export class Integrations extends React.Component<
         useCustomShell,
       } = this.props
 
-      // When there are no available editors or shells, the `Select` component
-      // will have the custom editor or shell already selected, but we need
-      // to handle that as initial value, otherwise the custom integration
-      // form won't be rendered.
-
       if (availableEditors.length === 0 && !useCustomEditor) {
         this.setSelectedEditor(CustomIntegrationValue)
       }
@@ -119,8 +115,6 @@ export class Integrations extends React.Component<
     prevProps: IIntegrationsPreferencesProps,
     prevState: IIntegrationsPreferencesState
   ): void {
-    // When the user switches to the custom editor or shell, we want to focus the
-    // path input field.
     if (!prevState.useCustomEditor && this.state.useCustomEditor) {
       this.customEditorFormRef.current?.focus()
     }
@@ -184,21 +178,20 @@ export class Integrations extends React.Component<
   private renderExternalEditor() {
     const options = this.props.availableEditors
     const { selectedExternalEditor, useCustomEditor } = this.state
-    const label = __DARWIN__ ? 'External Editor' : 'External editor'
+    const label = __DARWIN__
+      ? t('preferences.integrations.externalEditor.darwin')
+      : t('preferences.integrations.externalEditor.other')
 
     if (!enableCustomIntegration() && options.length === 0) {
-      // this is emulating the <Select/> component's UI so the styles are
-      // consistent for either case.
-      //
-      // TODO: see whether it makes sense to have a fallback UI
-      // which we display when the select list is empty
       return (
         <div className="select-component no-options-found">
           <label>{label}</label>
           <span>
-            No editors found.{' '}
+            {t('preferences.integrations.noEditorsFound')}{' '}
             <LinkButton uri={suggestedExternalEditor.url}>
-              Install {suggestedExternalEditor.name}?
+              {t('preferences.integrations.installEditor', {
+                name: suggestedExternalEditor.name,
+              })}
             </LinkButton>
           </span>
         </div>
@@ -208,7 +201,7 @@ export class Integrations extends React.Component<
     return (
       <Select
         label={enableCustomIntegration() ? undefined : label}
-        aria-label="External editor"
+        aria-label={t('preferences.integrations.externalEditor.ariaLabel')}
         value={
           useCustomEditor
             ? CustomIntegrationValue
@@ -224,8 +217,8 @@ export class Integrations extends React.Component<
         {enableCustomIntegration() && (
           <option key={CustomIntegrationValue} value={CustomIntegrationValue}>
             {__DARWIN__
-              ? 'Configure Custom Editor…'
-              : 'Configure custom editor…'}
+              ? t('preferences.integrations.configureCustomEditor.darwin')
+              : t('preferences.integrations.configureCustomEditor.other')}
           </option>
         )}
       </Select>
@@ -242,9 +235,11 @@ export class Integrations extends React.Component<
       <Row>
         <div className="no-options-found">
           <span>
-            No other editors found.{' '}
+            {t('preferences.integrations.noOtherEditorsFound')}{' '}
             <LinkButton uri={suggestedExternalEditor.url}>
-              Install {suggestedExternalEditor.name}?
+              {t('preferences.integrations.installEditor', {
+                name: suggestedExternalEditor.name,
+              })}
             </LinkButton>
           </span>
         </div>
@@ -295,8 +290,8 @@ export class Integrations extends React.Component<
 
     return (
       <Select
-        label={enableCustomIntegration() ? undefined : 'Shell'}
-        aria-label="Shell"
+        label={enableCustomIntegration() ? undefined : t('preferences.integrations.shell')}
+        aria-label={t('preferences.integrations.shell')}
         value={useCustomShell ? CustomIntegrationValue : selectedShell}
         onChange={this.onSelectedShellChanged}
       >
@@ -307,7 +302,9 @@ export class Integrations extends React.Component<
         ))}
         {enableCustomIntegration() && (
           <option key={CustomIntegrationValue} value={CustomIntegrationValue}>
-            {__DARWIN__ ? 'Configure Custom Shell…' : 'Configure custom shell…'}
+            {__DARWIN__
+              ? t('preferences.integrations.configureCustomShell.darwin')
+              : t('preferences.integrations.configureCustomShell.other')}
           </option>
         )}
       </Select>
@@ -355,7 +352,7 @@ export class Integrations extends React.Component<
     if (!enableCustomIntegration()) {
       return (
         <DialogContent>
-          <h2>Applications</h2>
+          <h2>{t('preferences.integrations.applications')}</h2>
           <Row>{this.renderExternalEditor()}</Row>
           <Row>{this.renderSelectedShell()}</Row>
         </DialogContent>
@@ -366,7 +363,11 @@ export class Integrations extends React.Component<
       <DialogContent>
         <fieldset>
           <legend>
-            <h2>{__DARWIN__ ? 'External Editor' : 'External editor'}</h2>
+            <h2>
+              {__DARWIN__
+                ? t('preferences.integrations.externalEditor.darwin')
+                : t('preferences.integrations.externalEditor.other')}
+            </h2>
           </legend>
           <Row>{this.renderExternalEditor()}</Row>
           {this.state.useCustomEditor && this.renderCustomExternalEditor()}
@@ -374,7 +375,7 @@ export class Integrations extends React.Component<
         </fieldset>
         <fieldset>
           <legend>
-            <h2>Shell</h2>
+            <h2>{t('preferences.integrations.shell')}</h2>
           </legend>
           <Row>{this.renderSelectedShell()}</Row>
           {this.state.useCustomShell && this.renderCustomShell()}

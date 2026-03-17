@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { DialogContent } from '../dialog'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { t } from '../../lib/i18n'
 
 interface IAccessibilityPreferencesProps {
   readonly underlineLinks: boolean
@@ -14,17 +15,13 @@ export class Accessibility extends React.Component<
   IAccessibilityPreferencesProps,
   {}
 > {
-  public constructor(props: IAccessibilityPreferencesProps) {
-    super(props)
-  }
-
   public render() {
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>Accessibility</h2>
+          <h2>{t('preferences.accessibility.heading')}</h2>
           <Checkbox
-            label="Underline links"
+            label={t('preferences.accessibility.underlineLinks')}
             value={
               this.props.underlineLinks ? CheckboxValue.On : CheckboxValue.Off
             }
@@ -35,13 +32,12 @@ export class Accessibility extends React.Component<
             id="underline-setting-description"
             className="git-settings-description"
           >
-            When enabled, GitHub Desktop will underline links in commit
-            messages, comments, and other text fields. This can help make links
-            easier to distinguish. {this.renderExampleLink()}
+            {t('preferences.accessibility.underlineDescription')}{' '}
+            {this.renderExampleLink()}
           </p>
 
           <Checkbox
-            label="Show check marks in the diff"
+            label={t('preferences.accessibility.showDiffCheckMarks')}
             value={
               this.props.showDiffCheckMarks
                 ? CheckboxValue.On
@@ -54,9 +50,7 @@ export class Accessibility extends React.Component<
             id="diff-checkmarks-setting-description"
             className="git-settings-description"
           >
-            When enabled, check marks will be displayed along side the line
-            numbers and groups of line numbers in the diff when committing. When
-            disabled, the line number controls will be less prominent.
+            {t('preferences.accessibility.diffCheckMarksDescription')}
           </p>
         </div>
       </DialogContent>
@@ -64,14 +58,13 @@ export class Accessibility extends React.Component<
   }
 
   private renderExampleLink() {
-    // The example link is rendered with inline style to override the global setting.
     const style = {
       textDecoration: this.props.underlineLinks ? 'underline' : 'none',
     }
 
     return (
       <span className="link-button-component" style={style}>
-        This is an example link
+        {t('preferences.accessibility.exampleLink')}
       </span>
     )
   }

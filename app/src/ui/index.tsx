@@ -45,7 +45,11 @@ import {
 } from '../lib/databases'
 import { shellNeedsPatching, updateEnvironmentForProcess } from '../lib/shell'
 import { installDevGlobals } from './install-globals'
-import { reportUncaughtException, sendErrorReport } from './main-process-proxy'
+import {
+  reportUncaughtException,
+  sendErrorReport,
+  setPreferredLocale,
+} from './main-process-proxy'
 import { getOS } from '../lib/get-os'
 import {
   enableSourceMaps,
@@ -82,10 +86,14 @@ if (__DEV__) {
   installDevGlobals()
 }
 
+const storedLocalePreference = getStoredLocalePreference()
+
 initializeLocale({
-  preferredLocale: getStoredLocalePreference(),
+  preferredLocale: storedLocalePreference,
   systemLocale: navigator.language,
 })
+
+setPreferredLocale(storedLocalePreference)
 
 migrateRendererGUID()
 
