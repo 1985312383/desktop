@@ -553,8 +553,8 @@ export class FilterChangesList extends React.Component<
       hasConflictedFiles(this.props.workingDirectory)
 
     const stashAllChangesLabel = __DARWIN__
-      ? 'Stash All Changes'
-      : 'Stash all changes'
+      ? t('menu.branch.stashAllChanges.darwin')
+      : t('menu.branch.stashAllChanges.other')
     const confirmStashAllChangesLabel = __DARWIN__
       ? 'Stash All Changes…'
       : 'Stash all changes…'
@@ -1413,10 +1413,12 @@ export class FilterChangesList extends React.Component<
     return (
       <div className="hidden-changes-warning" id="hidden-changes-warning">
         <Octicon symbol={octicons.alert} />
-        <span className="sr-only">Warning:</span>
-        <span>Hidden changes will be committed. </span>
+        <span className="sr-only">{t('changes.warning')}</span>
+        <span>{t('changes.filter.hiddenWarning.prefix')} </span>
         <LinkButton onClick={this.showFilesToBeCommitted}>
-          Adjust the filters to see all {filesSelected.length} changes
+          {t('changes.filter.hiddenWarning.link', {
+            count: filesSelected.length,
+          })}
         </LinkButton>
       </div>
     )

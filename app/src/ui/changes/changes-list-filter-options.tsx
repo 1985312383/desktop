@@ -17,6 +17,7 @@ import { Button } from '../lib/button'
 import classNames from 'classnames'
 import { IChangesListItem } from './filter-changes-list'
 import { WorkingDirectoryStatus } from '../../models/status'
+import { t } from '../../lib/i18n'
 
 interface IChangesListFilterOptionsProps {
   readonly fileListFilter: IFileListFilterState
@@ -159,11 +160,13 @@ export class ChangesListFilterOptions extends React.Component<
         onClickOutside={this.closeFilterOptions}
       >
         <div className="filter-popover-header">
-          <h3 id="filter-options-header">Filter Options</h3>
+          <h3 id="filter-options-header">
+            {t('changes.filter.options.title')}
+          </h3>
           <button
             className="close"
             onClick={this.closeFilterOptions}
-            aria-label="Close"
+            aria-label={t('changes.filter.options.close')}
           >
             <Octicon symbol={octicons.x} />
           </button>
@@ -176,7 +179,9 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Included in commit (${includedFilesCount})`}
+            label={t('changes.filter.options.included', {
+              count: includedFilesCount,
+            })}
           />
           <Checkbox
             value={
@@ -185,7 +190,9 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterExcludedFiles}
-            label={`Excluded from commit (${excludedFilesCount})`}
+            label={t('changes.filter.options.excluded', {
+              count: excludedFilesCount,
+            })}
           />
           <Checkbox
             value={
@@ -194,7 +201,7 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterNewFiles}
-            label={`New files (${newFilesCount})`}
+            label={t('changes.filter.options.new', { count: newFilesCount })}
           />
           <Checkbox
             value={
@@ -203,7 +210,9 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterModifiedFiles}
-            label={`Modified files (${modifiedFilesCount})`}
+            label={t('changes.filter.options.modified', {
+              count: modifiedFilesCount,
+            })}
           />
           <Checkbox
             value={
@@ -212,12 +221,16 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterDeletedFiles}
-            label={`Deleted files (${deletedFilesCount})`}
+            label={t('changes.filter.options.deleted', {
+              count: deletedFilesCount,
+            })}
           />
         </div>
         {filtersActive && (
           <div className="filter-options-footer">
-            <Button onClick={this.onClearAllFilters}>Clear filters</Button>
+            <Button onClick={this.onClearAllFilters}>
+              {t('changes.filter.clear')}
+            </Button>
           </div>
         )}
       </Popover>
@@ -233,9 +246,11 @@ export class ChangesListFilterOptions extends React.Component<
       this.props.fileListFilter
     )
     const hasActiveFilters = activeFiltersCount > 0
-    const buttonTextLabel = `Filter Options ${
-      hasActiveFilters ? `(${activeFiltersCount} applied)` : ''
-    }`
+    const buttonTextLabel = hasActiveFilters
+      ? t('changes.filter.options.button.active', {
+          count: activeFiltersCount,
+        })
+      : t('changes.filter.options.title')
 
     return (
       <>

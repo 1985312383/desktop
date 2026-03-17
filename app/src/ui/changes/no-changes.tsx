@@ -437,11 +437,11 @@ export class NoChanges extends React.Component<
     return (
       <MenuBackedSuggestedAction
         key="view-stash-action"
-        title="View your stashed changes"
+        title={t('changes.noChanges.viewStash.title')}
         menuItemId={itemId}
         description={description}
         discoverabilityContent={discoverabilityContent}
-        buttonText="View stash"
+        buttonText={t('changes.noChanges.viewStash.button')}
         type="primary"
         disabled={menuItem !== null && !menuItem.enabled}
         onClick={this.onViewStashClicked}
@@ -475,10 +475,10 @@ export class NoChanges extends React.Component<
     return (
       <MenuBackedSuggestedAction
         key="publish-repository-action"
-        title="Publish your repository to GitHub"
-        description="This repository is currently only available on your local machine. By publishing it on GitHub you can share it, and collaborate with others."
+        title={t('changes.noChanges.publishRepository.title')}
+        description={t('changes.noChanges.publishRepository.description')}
         discoverabilityContent={discoverabilityContent}
-        buttonText="Publish repository"
+        buttonText={t('toolbar.pushPull.publishRepository.title')}
         menuItemId={itemId}
         type="primary"
         disabled={!menuItem.enabled}
@@ -524,11 +524,11 @@ export class NoChanges extends React.Component<
     return (
       <MenuBackedSuggestedAction
         key="publish-branch-action"
-        title="Publish your branch"
+        title={t('changes.noChanges.publishBranch.title')}
         menuItemId={itemId}
         description={description}
         discoverabilityContent={discoverabilityContent}
-        buttonText="Publish branch"
+        buttonText={t('toolbar.pushPull.publishBranch.title')}
         type="primary"
         disabled={!menuItem.enabled}
         onClick={this.onPublishBranchClicked}
@@ -678,8 +678,8 @@ export class NoChanges extends React.Component<
       </>
     )
 
-    const title = `Create a Pull Request from your current branch`
-    const buttonText = `Create Pull Request`
+    const title = t('changes.noChanges.pullRequest.create.title')
+    const buttonText = t('changes.noChanges.pullRequest.create.button')
 
     const previewPullMenuItem = this.getMenuItemInfo('preview-pull-request')
 
@@ -701,8 +701,8 @@ export class NoChanges extends React.Component<
     }
 
     const previewPullRequestAction: IDropdownSuggestedActionOption = {
-      title: `Preview the Pull Request from your current branch`,
-      label: 'Preview Pull Request',
+      title: t('changes.noChanges.pullRequest.preview.title'),
+      label: t('changes.noChanges.pullRequest.preview.button'),
       description: (
         <>
           The current branch (<Ref>{tip.branch.name}</Ref>) is already published
