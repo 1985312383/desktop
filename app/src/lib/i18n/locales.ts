@@ -30,16 +30,14 @@ export const zhCN: TranslationDictionary = {
   'dialog.removeRepository.title.other': '移除仓库',
   'dialog.removeRepository.confirmation':
     '你确定要将仓库“{repositoryName}”从 GitHub Desktop 中移除吗？',
-  'dialog.removeRepository.description':
-    '该仓库将从 GitHub Desktop 中移除：',
+  'dialog.removeRepository.description': '该仓库将从 GitHub Desktop 中移除：',
   'dialog.removeRepository.moveToTrash': '同时将该仓库移动到 {trashName}',
   'dialog.removeRepository.confirmButton': '移除',
   'conflicts.summary.one': '1 个冲突文件',
   'conflicts.summary.other': '{count} 个冲突文件',
   'conflicts.allResolved': '所有冲突已解决',
   'conflicts.shell.openInCommandLine': '在命令行中打开，',
-  'conflicts.shell.resolveManually':
-    '使用你习惯的工具，或关闭后手动解决。',
+  'conflicts.shell.resolveManually': '使用你习惯的工具，或关闭后手动解决。',
   'menu.file.darwin': '文件',
   'menu.file.other': '文件(&F)',
   'menu.edit.darwin': '编辑',
