@@ -799,12 +799,12 @@ export class Preferences extends React.Component<
     const hasDisabledError = this.state.disallowedCharactersMessage != null
 
     return (
-        <DialogFooter>
-          <OkCancelButtonGroup
-            okButtonText={t('preferences.save')}
-            okButtonDisabled={hasDisabledError}
-          />
-        </DialogFooter>
+      <DialogFooter>
+        <OkCancelButtonGroup
+          okButtonText={t('preferences.save')}
+          okButtonDisabled={hasDisabledError}
+        />
+      </DialogFooter>
     )
   }
 

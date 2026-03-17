@@ -10,11 +10,7 @@ import { RadioGroup } from '../lib/radio-group'
 import { Select } from '../lib/select'
 import { encodePathAsUrl } from '../../lib/path'
 import { tabSizeDefault } from '../../lib/stores/app-store'
-import {
-  LocalePreference,
-  resolveLocalePreference,
-  t,
-} from '../../lib/i18n'
+import { LocalePreference, resolveLocalePreference, t } from '../../lib/i18n'
 
 interface IAppearanceProps {
   readonly selectedTheme: ApplicationTheme

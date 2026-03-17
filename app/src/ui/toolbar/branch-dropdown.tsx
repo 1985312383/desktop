@@ -30,6 +30,7 @@ import { generateBranchContextMenuItems } from '../branches/branch-list-item-con
 import { showContextualMenu } from '../../lib/menu-item'
 import { Emoji } from '../../lib/emoji'
 import { enableResizingToolbarButtons } from '../../lib/feature-flag'
+import { t } from '../../lib/i18n'
 
 interface IBranchDropdownProps {
   readonly dispatcher: Dispatcher
@@ -138,7 +139,7 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
     let icon: OcticonSymbol = octicons.gitBranch
     let iconClassName: string | undefined = undefined
     let title: string
-    let description = __DARWIN__ ? 'Current Branch' : 'Current branch'
+    let description = t('toolbar.branch.current')
     let canOpen = true
     let disabled = false
     let tooltip: string
@@ -160,7 +161,7 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       title = `On ${tip.currentSha.substring(0, 7)}`
       tooltip = 'Currently on a detached HEAD'
       icon = octicons.gitCommit
-      description = 'Detached HEAD'
+      description = t('toolbar.branch.detached')
     } else if (tip.kind === TipState.Valid) {
       title = tooltip = tip.branch.name
     } else {

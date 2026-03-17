@@ -69,6 +69,7 @@ import {
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 import { HookProgress } from '../../lib/git'
 import { assertNever } from '../../lib/fatal-error'
+import { t } from '../../lib/i18n'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -1461,8 +1462,12 @@ export class CommitMessage extends React.Component<
   private getButtonVerb() {
     const { isCommitting, commitToAmend } = this.props
 
-    const amendVerb = isCommitting ? 'Amending' : 'Amend'
-    const commitVerb = isCommitting ? 'Committing' : 'Commit'
+    const amendVerb = isCommitting
+      ? t('changes.commit.button.amending')
+      : t('changes.commit.button.amend')
+    const commitVerb = isCommitting
+      ? t('changes.commit.button.committing')
+      : t('changes.commit.button.commit')
     const isAmending = commitToAmend !== null
 
     return isAmending ? amendVerb : commitVerb
@@ -1481,7 +1486,9 @@ export class CommitMessage extends React.Component<
      * as three separate strings "Verb" and "Count" and "to" and even tho
      * visually it was correctly adding spacings, for screen reader users it was
      * not and putting them all to together as one word. */
-    const action = `${verb} ${this.getFilesToBeCommittedButtonText()}to `
+    const action = `${verb} ${this.getFilesToBeCommittedButtonText()}${t(
+      'changes.commit.button.to'
+    )} `
 
     return (
       <>
@@ -1501,7 +1508,10 @@ export class CommitMessage extends React.Component<
       return ''
     }
 
-    const pluralizedFile = filesToBeCommittedCount > 1 ? 'files' : 'file'
+    const pluralizedFile =
+      filesToBeCommittedCount > 1
+        ? t('changes.commit.button.files')
+        : t('changes.commit.button.file')
 
     return `${filesToBeCommittedCount} ${pluralizedFile} `
   }
@@ -1514,7 +1524,7 @@ export class CommitMessage extends React.Component<
       return verb
     }
 
-    return `${verb} to ${branch}`
+    return `${verb} ${t('changes.commit.button.to')} ${branch}`
   }
 
   private getButtonText() {
@@ -1537,7 +1547,7 @@ export class CommitMessage extends React.Component<
 
     const isAmending = commitToAmend !== null
     return isAmending
-      ? `${this.getButtonVerb()} last commit`
+      ? `${this.getButtonVerb()} ${t('changes.commit.button.lastCommit')}`
       : this.getCommittingButtonTitle()
   }
 
@@ -1736,7 +1746,7 @@ export class CommitMessage extends React.Component<
     return (
       <div
         role="group"
-        aria-label="Create commit"
+        aria-label={t('changes.commit.ariaLabel')}
         className={className}
         onContextMenu={this.onContextMenu}
         ref={this.wrapperRef}
@@ -1746,8 +1756,12 @@ export class CommitMessage extends React.Component<
 
           <AutocompletingInput
             required={true}
-            label={this.props.showInputLabels === true ? 'Summary' : undefined}
-            screenReaderLabel="Commit summary"
+            label={
+              this.props.showInputLabels === true
+                ? t('changes.commit.summary')
+                : undefined
+            }
+            screenReaderLabel={t('changes.commit.summaryScreenReader')}
             className={summaryInputClassName}
             placeholder={placeholder}
             value={this.state.commitMessage.summary}
@@ -1771,7 +1785,9 @@ export class CommitMessage extends React.Component<
         {this.state.isRuleFailurePopoverOpen && this.renderRuleFailurePopover()}
 
         {this.props.showInputLabels === true && (
-          <label htmlFor="commit-message-description">Description</label>
+          <label htmlFor="commit-message-description">
+            {t('changes.commit.description')}
+          </label>
         )}
         <FocusContainer
           className="description-focus-container"
@@ -1782,10 +1798,10 @@ export class CommitMessage extends React.Component<
             className={descriptionClassName}
             screenReaderLabel={
               this.props.showInputLabels !== true
-                ? 'Commit description'
+                ? t('changes.commit.descriptionScreenReader')
                 : undefined
             }
-            placeholder="Description"
+            placeholder={t('changes.commit.description')}
             value={this.state.commitMessage.description || ''}
             onValueChanged={this.onDescriptionChanged}
             autocompletionProviders={

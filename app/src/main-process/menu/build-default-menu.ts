@@ -163,20 +163,28 @@ export function buildDefaultMenu({
     submenu: [
       {
         role: 'undo',
-        label: __DARWIN__ ? t('menu.edit.undo.darwin') : t('menu.edit.undo.other'),
+        label: __DARWIN__
+          ? t('menu.edit.undo.darwin')
+          : t('menu.edit.undo.other'),
       },
       {
         role: 'redo',
-        label: __DARWIN__ ? t('menu.edit.redo.darwin') : t('menu.edit.redo.other'),
+        label: __DARWIN__
+          ? t('menu.edit.redo.darwin')
+          : t('menu.edit.redo.other'),
       },
       separator,
       {
         role: 'cut',
-        label: __DARWIN__ ? t('menu.edit.cut.darwin') : t('menu.edit.cut.other'),
+        label: __DARWIN__
+          ? t('menu.edit.cut.darwin')
+          : t('menu.edit.cut.other'),
       },
       {
         role: 'copy',
-        label: __DARWIN__ ? t('menu.edit.copy.darwin') : t('menu.edit.copy.other'),
+        label: __DARWIN__
+          ? t('menu.edit.copy.darwin')
+          : t('menu.edit.copy.other'),
       },
       {
         role: 'paste',
@@ -194,7 +202,9 @@ export function buildDefaultMenu({
       separator,
       {
         id: 'find',
-        label: __DARWIN__ ? t('menu.edit.find.darwin') : t('menu.edit.find.other'),
+        label: __DARWIN__
+          ? t('menu.edit.find.darwin')
+          : t('menu.edit.find.other'),
         accelerator: 'CmdOrCtrl+F',
         click: emit('find-text'),
       },

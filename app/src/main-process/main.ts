@@ -415,9 +415,7 @@ app.on('ready', () => {
   // repo assets
   const updateAccounts = installAuthenticatedImageFilter(orderedWebRequest)
 
-  Menu.setApplicationMenu(
-    buildDefaultMenu(currentMenuLabels)
-  )
+  Menu.setApplicationMenu(buildDefaultMenu(currentMenuLabels))
 
   ipcMain.on('update-accounts', (_, accounts) => updateAccounts(accounts))
 

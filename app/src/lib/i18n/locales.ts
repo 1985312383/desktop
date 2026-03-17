@@ -209,8 +209,7 @@ export const en = {
     'Load Git hook environment variables from shell',
   'preferences.git.hooks.loadEnvironmentDescription':
     'When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practice for version managers such as nvm, rbenv, asdf, etc.',
-  'preferences.git.hooks.selectShell':
-    'Shell to use when loading environment',
+  'preferences.git.hooks.selectShell': 'Shell to use when loading environment',
   'preferences.git.hooks.cacheEnvironment':
     'Cache Git hook environment variables',
   'preferences.git.hooks.cacheEnvironmentDescription':
@@ -271,8 +270,7 @@ export const en = {
   'preferences.notifications.settings.prefix':
     'Make sure notifications are {verb} for GitHub Desktop in the',
   'preferences.notifications.settings.suffix': '.',
-  'preferences.prompts.confirm.heading':
-    'Show a confirmation dialog before...',
+  'preferences.prompts.confirm.heading': 'Show a confirmation dialog before...',
   'preferences.prompts.confirm.removingRepositories': 'Removing repositories',
   'preferences.prompts.confirm.discardingChanges': 'Discarding changes',
   'preferences.prompts.confirm.discardingChangesPermanently':
@@ -338,6 +336,62 @@ export const en = {
   'preferences.appearance.tabSize.darwin': 'Tab Size',
   'preferences.appearance.tabSize.other': 'Tab size',
   'preferences.appearance.tabSize.default': '{size} (default)',
+  'toolbar.repository.current': 'Current repository',
+  'toolbar.branch.current': 'Current branch',
+  'toolbar.branch.detached': 'Detached HEAD',
+  'toolbar.pushPull.lastFetched': 'Last fetched',
+  'toolbar.pushPull.neverFetched': 'Never fetched',
+  'toolbar.pushPull.publishRepository.title': 'Publish repository',
+  'toolbar.pushPull.publishRepository.description':
+    'Publish this repository to GitHub',
+  'toolbar.pushPull.publishBranch.title': 'Publish branch',
+  'toolbar.pushPull.publishBranch.description.github':
+    'Publish this branch to GitHub',
+  'toolbar.pushPull.publishBranch.description.remote':
+    'Publish this branch to the remote',
+  'toolbar.pushPull.rebaseInProgress': 'Rebase in progress',
+  'toolbar.pushPull.detachedHead': 'Cannot publish detached HEAD',
+  'toolbar.pushPull.fetch': 'Fetch {remoteName}',
+  'toolbar.pushPull.pull': 'Pull {remoteName}',
+  'toolbar.pushPull.pullWithRebase': 'Pull {remoteName} with rebase',
+  'toolbar.pushPull.push': 'Push {remoteName}',
+  'toolbar.pushPull.forcePush': 'Force push {remoteName}',
+  'repository.tab.changes': 'Changes',
+  'repository.tab.history': 'History',
+  'changes.noChanges.title': 'No local changes',
+  'changes.noChanges.description':
+    'There are no uncommitted changes in this repository. Here are some friendly suggestions for what to do next.',
+  'changes.noChanges.openInExternalEditor.title':
+    'Open the repository in your external editor',
+  'changes.noChanges.openInExternalEditor.description.prefix':
+    'Select your editor in',
+  'changes.noChanges.showInFileManager.title':
+    'View the files of your repository in {fileManager}',
+  'changes.noChanges.viewOnGitHub.title':
+    'Open the repository page on GitHub in your browser',
+  'changes.filter.placeholder': 'Filter',
+  'changes.filter.clear': 'Clear filters',
+  'changes.filter.noResults.title': 'No files match your current filters',
+  'changes.stashed.title': 'Stashed Changes',
+  'changes.commit.ariaLabel': 'Create commit',
+  'changes.commit.summary': 'Summary',
+  'changes.commit.summaryRequired': 'Summary (required)',
+  'changes.commit.summaryScreenReader': 'Commit summary',
+  'changes.commit.description': 'Description',
+  'changes.commit.descriptionScreenReader': 'Commit description',
+  'changes.commit.button.commit': 'Commit',
+  'changes.commit.button.committing': 'Committing',
+  'changes.commit.button.amend': 'Amend',
+  'changes.commit.button.amending': 'Amending',
+  'changes.commit.button.to': 'to',
+  'changes.commit.button.file': 'file',
+  'changes.commit.button.files': 'files',
+  'changes.commit.button.lastCommit': 'last commit',
+  'changes.commit.tooltip.summaryRequired':
+    'A commit summary is required to commit',
+  'changes.commit.tooltip.selectFiles': 'Select one or more files to commit',
+  'changes.commit.tooltip.committing': 'Committing changes...',
+  'changes.commit.generating': 'Generating commit details...',
 } as const
 
 export type TranslationKey = keyof typeof en
@@ -348,8 +402,7 @@ export const zhCN: TranslationDictionary = {
   'dialog.removeRepository.title.other': '移除仓库',
   'dialog.removeRepository.confirmation':
     '确定要将仓库“{repositoryName}”从 GitHub Desktop 中移除吗？',
-  'dialog.removeRepository.description':
-    '该仓库将从 GitHub Desktop 中移除：',
+  'dialog.removeRepository.description': '该仓库将从 GitHub Desktop 中移除：',
   'dialog.removeRepository.moveToTrash': '同时将该仓库移动到 {trashName}',
   'dialog.removeRepository.confirmButton': '移除',
   'conflicts.summary.one': '1 个冲突文件',
@@ -470,8 +523,7 @@ export const zhCN: TranslationDictionary = {
   'menu.branch.mergeIntoCurrent.darwin': '合并到当前分支...',
   'menu.branch.mergeIntoCurrent.other': '合并到当前分支(&M)...',
   'menu.branch.squashAndMergeIntoCurrent.darwin': '压缩并合并到当前分支...',
-  'menu.branch.squashAndMergeIntoCurrent.other':
-    '压缩并合并到当前分支(&H)...',
+  'menu.branch.squashAndMergeIntoCurrent.other': '压缩并合并到当前分支(&H)...',
   'menu.branch.rebaseCurrent.darwin': '变基当前分支...',
   'menu.branch.rebaseCurrent.other': '变基当前分支(&E)...',
   'menu.branch.compareOnGitHub.darwin': '在 GitHub 上比较',
@@ -514,10 +566,8 @@ export const zhCN: TranslationDictionary = {
   'preferences.accounts.signOut.other': '退出登录',
   'preferences.accounts.signIntoDotCom.darwin': '登录 GitHub.com',
   'preferences.accounts.signIntoDotCom.other': '登录 GitHub.com',
-  'preferences.accounts.signIntoEnterprise.darwin':
-    '登录 GitHub Enterprise',
-  'preferences.accounts.signIntoEnterprise.other':
-    '登录 GitHub Enterprise',
+  'preferences.accounts.signIntoEnterprise.darwin': '登录 GitHub Enterprise',
+  'preferences.accounts.signIntoEnterprise.other': '登录 GitHub Enterprise',
   'preferences.accounts.dotComDescription':
     '登录你的 GitHub.com 账户以访问你的仓库。',
   'preferences.accounts.enterpriseDescription':
@@ -531,13 +581,10 @@ export const zhCN: TranslationDictionary = {
   'preferences.integrations.installEditor': '安装 {name}？',
   'preferences.integrations.configureCustomEditor.darwin':
     '配置自定义编辑器...',
-  'preferences.integrations.configureCustomEditor.other':
-    '配置自定义编辑器...',
+  'preferences.integrations.configureCustomEditor.other': '配置自定义编辑器...',
   'preferences.integrations.shell': 'Shell',
-  'preferences.integrations.configureCustomShell.darwin':
-    '配置自定义 Shell...',
-  'preferences.integrations.configureCustomShell.other':
-    '配置自定义 Shell...',
+  'preferences.integrations.configureCustomShell.darwin': '配置自定义 Shell...',
+  'preferences.integrations.configureCustomShell.other': '配置自定义 Shell...',
   'preferences.git.authorTab': '作者',
   'preferences.git.defaultBranchTab': '默认分支',
   'preferences.git.hooksTab': 'Hooks',
@@ -546,8 +593,7 @@ export const zhCN: TranslationDictionary = {
     'GitHub Desktop 的 Hook 支持目前仍属实验性功能，并且当前仅支持与提交相关的 Hook。若你遇到问题或有反馈，请',
   'preferences.git.hooks.warning.link': '告诉我们',
   'preferences.git.hooks.warning.suffix': '。',
-  'preferences.git.hooks.loadEnvironment':
-    '从 Shell 加载 Git Hook 环境变量',
+  'preferences.git.hooks.loadEnvironment': '从 Shell 加载 Git Hook 环境变量',
   'preferences.git.hooks.loadEnvironmentDescription':
     '启用后，GitHub Desktop 会在执行 Git Hook 时尝试从你的 Shell 中加载环境变量。如果你的 Git Hook 依赖于在 Shell 配置文件中设置的环境变量，这会很有帮助，这也是 nvm、rbenv、asdf 等版本管理工具的常见做法。',
   'preferences.git.hooks.selectShell': '加载环境时使用的 Shell',
@@ -566,8 +612,7 @@ export const zhCN: TranslationDictionary = {
   'preferences.git.userForm.email': '邮箱',
   'preferences.git.userForm.otherEmail': '其他',
   'preferences.git.userForm.githubDotComSuffix': '(GitHub.com)',
-  'preferences.git.userForm.githubEnterpriseSuffix':
-    '(GitHub Enterprise)',
+  'preferences.git.userForm.githubEnterpriseSuffix': '(GitHub Enterprise)',
   'preferences.git.userForm.learnMoreAria': '进一步了解提交归属',
   'preferences.git.userForm.learnMore': '了解更多。',
   'preferences.git.userForm.commitAttribution.mismatch':
@@ -586,8 +631,7 @@ export const zhCN: TranslationDictionary = {
   'preferences.integrations.custom.choose': '选择...',
   'preferences.integrations.custom.invalidPath':
     '该路径似乎不是有效的可执行文件。',
-  'preferences.integrations.custom.invalidArguments':
-    '这些参数无效。',
+  'preferences.integrations.custom.invalidArguments': '这些参数无效。',
   'preferences.integrations.custom.missingTargetPath':
     '参数必须包含目标路径占位符（{placeholder}）。',
   'preferences.notifications.heading': '通知',
@@ -610,8 +654,7 @@ export const zhCN: TranslationDictionary = {
   'preferences.prompts.confirm.heading': '在以下操作前显示确认对话框...',
   'preferences.prompts.confirm.removingRepositories': '移除仓库',
   'preferences.prompts.confirm.discardingChanges': '放弃更改',
-  'preferences.prompts.confirm.discardingChangesPermanently':
-    '永久放弃更改',
+  'preferences.prompts.confirm.discardingChangesPermanently': '永久放弃更改',
   'preferences.prompts.confirm.discardingStash': '丢弃储藏',
   'preferences.prompts.confirm.checkingOutCommit': '检出提交',
   'preferences.prompts.confirm.forcePushing': '强制推送',
@@ -626,7 +669,8 @@ export const zhCN: TranslationDictionary = {
   'preferences.prompts.commitLength.heading': '提交长度',
   'preferences.prompts.commitLength.showWarning': '显示提交长度警告',
   'preferences.advanced.backgroundUpdates.heading': '后台更新',
-  'preferences.advanced.backgroundUpdates.showStatusIcons': '在仓库列表中显示状态图标',
+  'preferences.advanced.backgroundUpdates.showStatusIcons':
+    '在仓库列表中显示状态图标',
   'preferences.advanced.backgroundUpdates.description.one':
     '这些图标会指示哪些仓库存在本地或远程更改，并要求对当前未选中的仓库执行周期性抓取。',
   'preferences.advanced.backgroundUpdates.description.two':
@@ -636,7 +680,8 @@ export const zhCN: TranslationDictionary = {
   'preferences.advanced.usage.link': '使用统计',
   'preferences.advanced.network.heading': '网络和凭据',
   'preferences.advanced.network.useGcm': '使用 Git Credential Manager',
-  'preferences.advanced.network.useGcmDescription.prefix': '为 GitHub.com 之外的私有仓库使用',
+  'preferences.advanced.network.useGcmDescription.prefix':
+    '为 GitHub.com 之外的私有仓库使用',
   'preferences.advanced.network.useGcmDescription.link':
     'Git Credential Manager',
   'preferences.advanced.network.useGcmDescription.suffix':
@@ -664,4 +709,53 @@ export const zhCN: TranslationDictionary = {
   'preferences.appearance.tabSize.darwin': 'Tab 宽度',
   'preferences.appearance.tabSize.other': 'Tab 宽度',
   'preferences.appearance.tabSize.default': '{size}（默认）',
+  'toolbar.repository.current': '当前仓库',
+  'toolbar.branch.current': '当前分支',
+  'toolbar.branch.detached': '游离 HEAD',
+  'toolbar.pushPull.lastFetched': '上次抓取',
+  'toolbar.pushPull.neverFetched': '从未抓取',
+  'toolbar.pushPull.publishRepository.title': '发布仓库',
+  'toolbar.pushPull.publishRepository.description': '将此仓库发布到 GitHub',
+  'toolbar.pushPull.publishBranch.title': '发布分支',
+  'toolbar.pushPull.publishBranch.description.github': '将此分支发布到 GitHub',
+  'toolbar.pushPull.publishBranch.description.remote': '将此分支发布到远程仓库',
+  'toolbar.pushPull.rebaseInProgress': '正在变基',
+  'toolbar.pushPull.detachedHead': '游离 HEAD 状态下无法发布',
+  'toolbar.pushPull.fetch': '抓取 {remoteName}',
+  'toolbar.pushPull.pull': '拉取 {remoteName}',
+  'toolbar.pushPull.pullWithRebase': '通过变基拉取 {remoteName}',
+  'toolbar.pushPull.push': '推送到 {remoteName}',
+  'toolbar.pushPull.forcePush': '强制推送到 {remoteName}',
+  'repository.tab.changes': '更改',
+  'repository.tab.history': '历史',
+  'changes.noChanges.title': '没有本地更改',
+  'changes.noChanges.description':
+    '这个仓库当前没有未提交的更改。下面是一些接下来可以执行的建议。',
+  'changes.noChanges.openInExternalEditor.title': '在外部编辑器中打开仓库',
+  'changes.noChanges.openInExternalEditor.description.prefix':
+    '在这里选择你的编辑器',
+  'changes.noChanges.showInFileManager.title': '在{fileManager}中查看仓库文件',
+  'changes.noChanges.viewOnGitHub.title': '在浏览器中打开此仓库的 GitHub 页面',
+  'changes.filter.placeholder': '筛选',
+  'changes.filter.clear': '清除筛选',
+  'changes.filter.noResults.title': '没有文件符合当前筛选条件',
+  'changes.stashed.title': '已暂存的更改',
+  'changes.commit.ariaLabel': '创建提交',
+  'changes.commit.summary': '摘要',
+  'changes.commit.summaryRequired': '摘要（必填）',
+  'changes.commit.summaryScreenReader': '提交摘要',
+  'changes.commit.description': '描述',
+  'changes.commit.descriptionScreenReader': '提交描述',
+  'changes.commit.button.commit': '提交',
+  'changes.commit.button.committing': '正在提交',
+  'changes.commit.button.amend': '修订',
+  'changes.commit.button.amending': '正在修订',
+  'changes.commit.button.to': '到',
+  'changes.commit.button.file': '个文件',
+  'changes.commit.button.files': '个文件',
+  'changes.commit.button.lastCommit': '上一次提交',
+  'changes.commit.tooltip.summaryRequired': '提交前必须填写摘要',
+  'changes.commit.tooltip.selectFiles': '请选择一个或多个文件再提交',
+  'changes.commit.tooltip.committing': '正在提交更改...',
+  'changes.commit.generating': '正在生成提交内容...',
 }

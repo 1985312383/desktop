@@ -1,9 +1,4 @@
-import {
-  en,
-  zhCN,
-  TranslationDictionary,
-  TranslationKey,
-} from './locales'
+import { en, zhCN, TranslationDictionary, TranslationKey } from './locales'
 
 export type SupportedLocale = 'en' | 'zh-CN'
 export type LocalePreference = SupportedLocale | null

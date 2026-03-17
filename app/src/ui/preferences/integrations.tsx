@@ -290,7 +290,11 @@ export class Integrations extends React.Component<
 
     return (
       <Select
-        label={enableCustomIntegration() ? undefined : t('preferences.integrations.shell')}
+        label={
+          enableCustomIntegration()
+            ? undefined
+            : t('preferences.integrations.shell')
+        }
         aria-label={t('preferences.integrations.shell')}
         value={useCustomShell ? CustomIntegrationValue : selectedShell}
         onChange={this.onSelectedShellChanged}
