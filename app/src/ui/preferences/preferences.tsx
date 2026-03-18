@@ -311,7 +311,15 @@ export class Preferences extends React.Component<
   }
 
   private onCancel = () => {
-    this.applyRendererLocale(this.state.initiallySelectedLocale)
+    const storedLocalePreference = getStoredLocalePreference()
+    const hasUnsavedLocaleChange =
+      this.state.selectedLocale !== storedLocalePreference
+
+    this.applyRendererLocale(
+      hasUnsavedLocaleChange
+        ? this.state.initiallySelectedLocale
+        : this.state.selectedLocale
+    )
 
     if (this.state.initiallySelectedTheme !== this.props.selectedTheme) {
       this.onSelectedThemeChanged(this.state.initiallySelectedTheme)
@@ -960,7 +968,8 @@ export class Preferences extends React.Component<
     if (this.state.selectedLocale !== storedLocalePreference) {
       this.applyRendererLocale(this.state.selectedLocale)
       setStoredLocalePreference(this.state.selectedLocale)
-      setPreferredLocale(this.state.selectedLocale)
+      await setPreferredLocale(this.state.selectedLocale)
+      this.props.onDismissed()
       window.location.reload()
       return
     }
