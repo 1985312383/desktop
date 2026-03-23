@@ -1,0 +1,91 @@
+name: Build Release Assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows Installers
+    runs-on: windows-2022
+    permissions:
+      contents: read
+    env:
+      NODE_VERSION: 24.11.1
+      RELEASE_CHANNEL: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn
+        env:
+          npm_config_arch: x64
+          TARGET_ARCH: x64
+
+      - name: Build production app
+        run: yarn build:prod
+        env:
+          npm_config_arch: x64
+          TARGET_ARCH: x64
+
+      - name: Package production app
+        run: yarn package
+        env:
+          npm_config_arch: x64
+          TARGET_ARCH: x64
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: |
+            dist/GitHubDesktop-*.nupkg
+            dist/GitHubDesktopSetup-x64.exe
+            dist/GitHubDesktopSetup-x64.msi
+            dist/bundle-size.json
+          if-no-files-found: error
+
+  attach-assets:
+    name: Attach Assets To Release
+    needs: build-windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Upload assets to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: |
+            release-assets/**/*.zip
+            release-assets/**/*.exe
+            release-assets/**/*.msi
+            release-assets/**/*.nupkg
+            release-assets/**/bundle-size.json
+          fail_on_unmatched_files: true
