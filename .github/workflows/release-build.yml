@@ -60,8 +60,8 @@ jobs:
           name: windows-x64
           path: |
             dist/GitHubDesktop-*.nupkg
-            dist/GitHubDesktopSetup-x64.exe
-            dist/GitHubDesktopSetup-x64.msi
+            dist/GitHubDesktop*Setup-x64.exe
+            dist/GitHubDesktop*Setup-x64.msi
           if-no-files-found: error
 
   build-macos-x64:
@@ -187,12 +187,37 @@ jobs:
           version="${GITHUB_REF_NAME#v}"
           mkdir -p release-staging
 
-          mac_arm64="$(find release-assets -type f -name '*-arm64.zip' | head -n 1)"
-          mac_x64="$(find release-assets -type f -name '*-x64.zip' | head -n 1)"
-          win_delta="$(find release-assets -type f -name '*-x64-delta.nupkg' | head -n 1)"
-          win_full="$(find release-assets -type f -name '*-x64-full.nupkg' | head -n 1)"
-          win_exe="$(find release-assets -type f -name 'GitHubDesktopSetup-x64.exe' | head -n 1)"
-          win_msi="$(find release-assets -type f -name 'GitHubDesktopSetup-x64.msi' | head -n 1)"
+          find_one() {
+            find release-assets -type f "$@" | head -n 1
+          }
+
+          require_file() {
+            local label="$1"
+            local path="$2"
+            if [ -z "$path" ]; then
+              echo "Missing expected artifact: $label" >&2
+              echo "Downloaded files were:" >&2
+              find release-assets -type f | sort >&2
+              exit 1
+            fi
+          }
+
+          mac_arm64="$(find_one -name '*arm64*.zip')"
+          mac_x64="$(find_one -name '*x64*.zip')"
+          win_full="$(find_one -name '*full.nupkg')"
+          win_delta="$(find_one -name '*delta.nupkg')"
+          win_exe="$(find_one -name 'GitHubDesktop*Setup-x64.exe')"
+          win_msi="$(find_one -name 'GitHubDesktop*Setup-x64.msi')"
+
+          require_file 'macOS arm64 zip' "$mac_arm64"
+          require_file 'macOS x64 zip' "$mac_x64"
+          require_file 'Windows full nupkg' "$win_full"
+          require_file 'Windows exe installer' "$win_exe"
+          require_file 'Windows msi installer' "$win_msi"
+
+          if [ -z "$win_delta" ]; then
+            win_delta="$win_full"
+          fi
 
           cp "$mac_arm64" "release-staging/GitHub Desktop ${version} macOS arm64.zip"
           cp "$mac_x64" "release-staging/GitHub Desktop ${version} macOS x64.zip"
