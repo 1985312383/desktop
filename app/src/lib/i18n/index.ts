@@ -1,6 +1,6 @@
-import { en, zhCN, TranslationDictionary, TranslationKey } from './locales'
+import { en, zhCN, ja, de, TranslationDictionary, TranslationKey } from './locales'
 
-export type SupportedLocale = 'en' | 'zh-CN'
+export type SupportedLocale = 'de' | 'en' | 'ja' | 'zh-CN'
 export type LocalePreference = SupportedLocale | null
 
 type TranslationValues = Readonly<Record<string, string | number>>
@@ -13,10 +13,12 @@ interface ILocaleInitializationOptions {
 
 export const localePreferenceKey = 'locale'
 
-export const supportedLocales: ReadonlyArray<SupportedLocale> = ['en', 'zh-CN']
+export const supportedLocales: ReadonlyArray<SupportedLocale> = ['en', 'zh-CN', 'ja', 'de',]
 
 const dictionaries: Record<SupportedLocale, TranslationDictionary> = {
+  de,
   en,
+  ja,
   'zh-CN': zhCN,
 }
 
@@ -33,6 +35,14 @@ function resolveSupportedLocale(
   const normalized = locale.toLowerCase()
   if (normalized.startsWith('zh')) {
     return 'zh-CN'
+  }
+
+  if (normalized.startsWith('ja')) {
+    return 'ja'
+  }
+
+  if (normalized.startsWith('de')) {
+    return 'de'
   }
 
   if (normalized.startsWith('en')) {

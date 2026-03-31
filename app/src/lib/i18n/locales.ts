@@ -1,4 +1,4 @@
-export const en = {
+﻿export const en = {
   'dialog.removeRepository.title.darwin': 'Remove Repository',
   'dialog.removeRepository.title.other': 'Remove repository',
   'dialog.removeRepository.confirmation':
@@ -331,7 +331,9 @@ export const en = {
   'preferences.appearance.language.label': 'Language',
   'preferences.appearance.language.system': 'System default',
   'preferences.appearance.language.english': 'English',
-  'preferences.appearance.language.simplifiedChinese': 'Simplified Chinese',
+  'preferences.appearance.language.simplifiedChinese': '简体中文',
+  'preferences.appearance.language.japanese': '日本語',
+  'preferences.appearance.language.german': 'Deutsch',
   'preferences.appearance.diff.heading': 'Diff',
   'preferences.appearance.tabSize.darwin': 'Tab Size',
   'preferences.appearance.tabSize.other': 'Tab size',
@@ -730,6 +732,8 @@ export const zhCN: TranslationDictionary = {
   'preferences.appearance.language.system': '系统默认',
   'preferences.appearance.language.english': 'English',
   'preferences.appearance.language.simplifiedChinese': '简体中文',
+  'preferences.appearance.language.japanese': '日本語',
+  'preferences.appearance.language.german': 'Deutsch',
   'preferences.appearance.diff.heading': '差异',
   'preferences.appearance.tabSize.darwin': 'Tab 宽度',
   'preferences.appearance.tabSize.other': 'Tab 宽度',
@@ -804,4 +808,485 @@ export const zhCN: TranslationDictionary = {
   'changes.filter.hiddenWarning.prefix': '被隐藏的更改仍会被提交。',
   'changes.filter.hiddenWarning.link': '调整筛选条件以查看全部 {count} 项更改',
   'changes.warning': '警告：',
+}
+
+
+export const ja: TranslationDictionary = {
+  ...en,
+  'preferences.title.darwin': '設定',
+  'preferences.title.other': 'オプション',
+  'preferences.tab.accounts': 'アカウント',
+  'preferences.tab.integrations': '連携',
+  'preferences.tab.git': 'Git',
+  'preferences.tab.appearance': '外観',
+  'preferences.tab.notifications': '通知',
+  'preferences.tab.prompts': '確認',
+  'preferences.tab.advanced': '詳細',
+  'preferences.tab.accessibility': 'アクセシビリティ',
+  'preferences.save': '保存',
+  'preferences.accounts.githubDotCom': 'GitHub.com',
+  'preferences.accounts.githubEnterprise': 'GitHub Enterprise',
+  'preferences.accounts.addEnterpriseAccount':
+    'GitHub Enterprise アカウントを追加',
+  'preferences.accounts.signOut.darwin': 'サインアウト',
+  'preferences.accounts.signOut.other': 'サインアウト',
+  'preferences.accounts.signIntoDotCom.darwin': 'GitHub.com にサインイン',
+  'preferences.accounts.signIntoDotCom.other': 'GitHub.com にサインイン',
+  'preferences.accounts.signIntoEnterprise.darwin':
+    'GitHub Enterprise にサインイン',
+  'preferences.accounts.signIntoEnterprise.other':
+    'GitHub Enterprise にサインイン',
+  'preferences.accounts.dotComDescription':
+    'リポジトリにアクセスするには、GitHub.com アカウントにサインインしてください。',
+  'preferences.accounts.enterpriseDescription':
+    '仕事で GitHub Enterprise を使っている場合は、サインインするとリポジトリにアクセスできます。',
+  'preferences.integrations.applications': 'アプリケーション',
+  'preferences.integrations.externalEditor.darwin': '外部エディタ',
+  'preferences.integrations.externalEditor.other': '外部エディタ',
+  'preferences.integrations.externalEditor.ariaLabel': '外部エディタ',
+  'preferences.integrations.noEditorsFound':
+    'エディタが見つかりませんでした。',
+  'preferences.integrations.noOtherEditorsFound':
+    '他のエディタが見つかりませんでした。',
+  'preferences.integrations.installEditor': '{name} をインストールしますか？',
+  'preferences.integrations.configureCustomEditor.darwin':
+    'カスタムエディタを設定...',
+  'preferences.integrations.configureCustomEditor.other':
+    'カスタムエディタを設定...',
+  'preferences.integrations.shell': 'シェル',
+  'preferences.integrations.configureCustomShell.darwin':
+    'カスタムシェルを設定...',
+  'preferences.integrations.configureCustomShell.other':
+    'カスタムシェルを設定...',
+  'preferences.integrations.custom.path': 'パス',
+  'preferences.integrations.custom.arguments': '引数',
+  'preferences.integrations.custom.pathPlaceholder':
+    '実行ファイルへのパス',
+  'preferences.integrations.custom.argumentsPlaceholder':
+    'コマンドライン引数',
+  'preferences.integrations.custom.choose': '選択...',
+  'preferences.integrations.custom.invalidPath':
+    'このパスは有効な実行ファイルではないようです。',
+  'preferences.integrations.custom.invalidArguments':
+    'これらの引数は無効です。',
+  'preferences.integrations.custom.missingTargetPath':
+    '引数にはターゲットパスのプレースホルダー ({placeholder}) を含める必要があります。',
+  'preferences.appearance.theme.heading': 'テーマ',
+  'preferences.appearance.theme.light': 'ライト',
+  'preferences.appearance.theme.dark': 'ダーク',
+  'preferences.appearance.theme.system': 'システム',
+  'preferences.appearance.language.heading': '言語',
+  'preferences.appearance.language.label': '言語',
+  'preferences.appearance.language.system': 'システムのデフォルト',
+  'preferences.appearance.language.english': 'English',
+  'preferences.appearance.language.simplifiedChinese': '简体中文',
+  'preferences.appearance.language.japanese': '日本語',
+  'preferences.appearance.language.german': 'Deutsch',
+  'preferences.appearance.diff.heading': '差分',
+  'preferences.appearance.tabSize.darwin': 'タブサイズ',
+  'preferences.appearance.tabSize.other': 'タブサイズ',
+  'preferences.appearance.tabSize.default': '{size}（デフォルト）',
+  'preferences.appearance.loadingTheme': 'システムテーマを読み込み中',
+  'preferences.notifications.heading': '通知',
+  'preferences.notifications.enable': '通知を有効にする',
+  'preferences.notifications.description':
+    '現在のリポジトリで重要なイベントが発生したときに通知を表示します。',
+  'preferences.notifications.grantPermission.prefix': 'まず',
+  'preferences.notifications.grantPermission.link': '権限を付与',
+  'preferences.notifications.grantPermission.suffix':
+    'して、GitHub Desktop からこれらの通知を表示できるようにする必要があります。',
+  'preferences.notifications.denied.prefix':
+    'GitHub Desktop には通知を表示する権限がありません。次で有効にしてください',
+  'preferences.notifications.denied.suffix': '。',
+  'preferences.notifications.settingsLink': '通知設定',
+  'preferences.notifications.configured': '正しく設定',
+  'preferences.notifications.enabled': '有効',
+  'preferences.notifications.settings.prefix':
+    '次の場所で GitHub Desktop の通知が {verb} になっていることを確認してください',
+  'preferences.notifications.settings.suffix': '。',
+  'preferences.prompts.confirm.heading':
+    '次の操作の前に確認ダイアログを表示する...',
+  'preferences.prompts.confirm.removingRepositories': 'リポジトリの削除',
+  'preferences.prompts.confirm.discardingChanges': '変更の破棄',
+  'preferences.prompts.confirm.discardingChangesPermanently':
+    '変更を完全に破棄する',
+  'preferences.prompts.confirm.discardingStash': 'stash の破棄',
+  'preferences.prompts.confirm.checkingOutCommit': 'コミットのチェックアウト',
+  'preferences.prompts.confirm.forcePushing': '強制プッシュ',
+  'preferences.prompts.confirm.undoCommit': 'コミットの取り消し',
+  'preferences.prompts.confirm.overrideCommitMessage':
+    '生成されたメッセージでコミットメッセージを上書きする',
+  'preferences.prompts.confirm.filteredChanges':
+    'フィルターで隠れている変更をコミットする',
+  'preferences.prompts.switchBranches.heading':
+    '変更がある状態でブランチを切り替えるとき...',
+  'preferences.prompts.switchBranches.ask':
+    '変更をどうするか毎回確認する',
+  'preferences.prompts.switchBranches.move':
+    '変更を常に新しいブランチへ移動する',
+  'preferences.prompts.switchBranches.stash':
+    '変更を常に stash して現在のブランチに残す',
+  'preferences.prompts.commitLength.heading': 'コミットの長さ',
+  'preferences.prompts.commitLength.showWarning':
+    'コミットの長さに関する警告を表示する',
+  'preferences.advanced.backgroundUpdates.heading': 'バックグラウンド更新',
+  'preferences.advanced.backgroundUpdates.showStatusIcons':
+    'リポジトリ一覧にステータスアイコンを表示する',
+  'preferences.advanced.backgroundUpdates.description.one':
+    'これらのアイコンは、どのリポジトリにローカルまたはリモートの変更があるかを示し、現在選択されていないリポジトリも定期的に fetch する必要があります。',
+  'preferences.advanced.backgroundUpdates.description.two':
+    'これをオフにしても現在選択中のリポジトリの定期的な fetch は停止しませんが、リポジトリ数が多い場合は全体的なパフォーマンスが向上することがあります。',
+  'preferences.advanced.usage.heading': '使用状況',
+  'preferences.advanced.usage.labelPrefix':
+    '次の送信により GitHub Desktop の改善に協力する',
+  'preferences.advanced.usage.link': '利用統計',
+  'preferences.advanced.network.heading': 'ネットワークと認証情報',
+  'preferences.advanced.network.useGcm':
+    'Git Credential Manager を使用する',
+  'preferences.advanced.network.useGcmDescription.prefix': 'Use',
+  'preferences.advanced.network.useGcmDescription.link':
+    'Git Credential Manager',
+  'preferences.advanced.network.useGcmDescription.suffix':
+    'を GitHub.com 以外のプライベートリポジトリに使用します。この機能は実験的であり、変更される可能性があります。',
+  'preferences.advanced.network.useSystemSsh':
+    'システムの OpenSSH を使用する（推奨）',
+  'preferences.accessibility.heading': 'アクセシビリティ',
+  'preferences.accessibility.underlineLinks': 'リンクに下線を付ける',
+  'preferences.accessibility.underlineDescription':
+    '有効にすると、GitHub Desktop はコミットメッセージ、コメント、その他のテキストフィールド内のリンクに下線を付けます。これによりリンクを見分けやすくなります。',
+  'preferences.accessibility.exampleLink': 'これはリンクの例です',
+  'preferences.accessibility.showDiffCheckMarks':
+    '差分にチェックマークを表示する',
+  'preferences.accessibility.diffCheckMarksDescription':
+    '有効にすると、コミット時の差分で行番号や行グループの横にチェックマークが表示されます。無効にすると、行番号のコントロールは目立たなくなります。',
+  'toolbar.repository.current': '現在のリポジトリ',
+  'toolbar.branch.current': '現在のブランチ',
+  'toolbar.branch.detached': '分離された HEAD',
+  'toolbar.pushPull.lastFetched': '最終 fetch',
+  'toolbar.pushPull.neverFetched': '一度も fetch していません',
+  'toolbar.pushPull.publishRepository.title': 'リポジトリを公開',
+  'toolbar.pushPull.publishRepository.description':
+    'このリポジトリを GitHub に公開',
+  'toolbar.pushPull.publishBranch.title': 'ブランチを公開',
+  'toolbar.pushPull.publishBranch.description.github':
+    'このブランチを GitHub に公開',
+  'toolbar.pushPull.publishBranch.description.remote':
+    'このブランチをリモートに公開',
+  'toolbar.pushPull.rebaseInProgress': 'rebase 実行中',
+  'toolbar.pushPull.detachedHead': '分離された HEAD は公開できません',
+  'toolbar.pushPull.fetch': '{remoteName} を fetch',
+  'toolbar.pushPull.pull': '{remoteName} から pull',
+  'toolbar.pushPull.pullWithRebase':
+    '{remoteName} から rebase 付きで pull',
+  'toolbar.pushPull.push': '{remoteName} に push',
+  'toolbar.pushPull.forcePush': '{remoteName} に強制 push',
+  'repository.tab.changes': '変更',
+  'repository.tab.history': '履歴',
+  'changes.noChanges.title': 'ローカルの変更はありません',
+  'changes.noChanges.description':
+    'このリポジトリには未コミットの変更がありません。次にできることをいくつか表示します。',
+  'changes.noChanges.openInExternalEditor.title':
+    '外部エディタでリポジトリを開く',
+  'changes.noChanges.openInExternalEditor.description.prefix':
+    'エディタを選択:',
+  'changes.noChanges.showInFileManager.title':
+    '{fileManager} でリポジトリのファイルを表示',
+  'changes.noChanges.viewOnGitHub.title':
+    'ブラウザで GitHub のリポジトリページを開く',
+  'changes.noChanges.viewStash.title': 'stash した変更を表示',
+  'changes.noChanges.viewStash.button': 'stash を表示',
+  'changes.noChanges.publishRepository.title':
+    'リポジトリを GitHub に公開',
+  'changes.noChanges.publishRepository.description':
+    'このリポジトリは現在ローカルマシン上にしかありません。GitHub に公開すると、共有したり他の人と共同作業したりできます。',
+  'changes.noChanges.publishBranch.title': 'ブランチを公開',
+  'changes.noChanges.pullRequest.create.title':
+    '現在のブランチから Pull Request を作成',
+  'changes.noChanges.pullRequest.create.button':
+    'Pull Request を作成',
+  'changes.noChanges.pullRequest.preview.title':
+    '現在のブランチから Pull Request をプレビュー',
+  'changes.noChanges.pullRequest.preview.button':
+    'Pull Request をプレビュー',
+  'changes.filter.placeholder': 'フィルター',
+  'changes.filter.clear': 'フィルターをクリア',
+  'changes.filter.noResults.title':
+    '現在のフィルターに一致するファイルがありません',
+  'changes.filter.options.title': 'フィルター設定',
+  'changes.filter.options.close': '閉じる',
+  'changes.filter.options.included': 'コミットに含める ({count})',
+  'changes.filter.options.excluded': 'コミットから除外 ({count})',
+  'changes.filter.options.new': '新規ファイル ({count})',
+  'changes.filter.options.modified': '変更済みファイル ({count})',
+  'changes.filter.options.deleted': '削除済みファイル ({count})',
+  'changes.filter.options.button.active':
+    'フィルター設定 ({count} 件適用中)',
+  'changes.filter.hiddenWarning.prefix':
+    '非表示の変更もコミットされます。',
+  'changes.filter.hiddenWarning.link':
+    'フィルターを調整して {count} 件すべての変更を表示',
+  'changes.stashed.title': 'stash した変更',
+  'changes.warning': '警告:',
+  'changes.commit.ariaLabel': 'コミットを作成',
+  'changes.commit.summary': '概要',
+  'changes.commit.summaryRequired': '概要（必須）',
+  'changes.commit.summaryScreenReader': 'コミット概要',
+  'changes.commit.description': '説明',
+  'changes.commit.descriptionScreenReader': 'コミット説明',
+  'changes.commit.button.commit': 'コミット',
+  'changes.commit.button.committing': 'コミット中',
+  'changes.commit.button.amend': '修正',
+  'changes.commit.button.amending': '修正中',
+  'changes.commit.button.to': '対象',
+  'changes.commit.button.file': 'ファイル',
+  'changes.commit.button.files': 'ファイル',
+  'changes.commit.button.lastCommit': '前回のコミット',
+  'changes.commit.tooltip.summaryRequired':
+    'コミットするには概要が必要です',
+  'changes.commit.tooltip.selectFiles':
+    'コミットするファイルを1つ以上選択してください',
+  'changes.commit.tooltip.committing': '変更をコミットしています...',
+  'changes.commit.generating': 'コミット詳細を生成しています...',
+}
+
+export const de: TranslationDictionary = {
+  ...en,
+  'preferences.appearance.theme.heading': 'Design',
+  'preferences.appearance.theme.light': 'Hell',
+  'preferences.appearance.theme.dark': 'Dunkel',
+  'preferences.appearance.theme.system': 'System',
+  'preferences.appearance.language.heading': 'Sprache',
+  'preferences.appearance.language.label': 'Sprache',
+  'preferences.appearance.language.system': 'Systemstandard',
+  'preferences.appearance.language.english': 'English',
+  'preferences.appearance.language.simplifiedChinese': '简体中文',
+  'preferences.appearance.language.japanese': '日本語',
+  'preferences.appearance.language.german': 'Deutsch',
+  'preferences.appearance.diff.heading': 'Diff',
+  'preferences.appearance.tabSize.darwin': 'Tabulatorgröße',
+  'preferences.appearance.tabSize.other': 'Tabulatorgröße',
+  'preferences.appearance.tabSize.default': '{size} (Standard)',
+  'preferences.appearance.loadingTheme': 'Systemdesign wird geladen',
+    'preferences.title.darwin': 'Einstellungen',
+  'preferences.title.other': 'Optionen',
+  'preferences.tab.accounts': 'Konten',
+  'preferences.tab.integrations': 'Integrationen',
+  'preferences.tab.git': 'Git',
+  'preferences.tab.appearance': 'Darstellung',
+  'preferences.tab.notifications': 'Benachrichtigungen',
+  'preferences.tab.prompts': 'Best?tigungen',
+  'preferences.tab.advanced': 'Erweitert',
+  'preferences.tab.accessibility': 'Barrierefreiheit',
+  'preferences.save': 'Speichern',
+  'preferences.accounts.githubDotCom': 'GitHub.com',
+  'preferences.accounts.githubEnterprise': 'GitHub Enterprise',
+  'preferences.accounts.addEnterpriseAccount':
+    'GitHub-Enterprise-Konto hinzuf?gen',
+  'preferences.accounts.signOut.darwin': 'Abmelden',
+  'preferences.accounts.signOut.other': 'Abmelden',
+  'preferences.accounts.signIntoDotCom.darwin': 'Bei GitHub.com anmelden',
+  'preferences.accounts.signIntoDotCom.other': 'Bei GitHub.com anmelden',
+  'preferences.accounts.signIntoEnterprise.darwin':
+    'Bei GitHub Enterprise anmelden',
+  'preferences.accounts.signIntoEnterprise.other':
+    'Bei GitHub Enterprise anmelden',
+  'preferences.accounts.dotComDescription':
+    'Melde dich bei deinem GitHub.com-Konto an, um auf deine Repositories zuzugreifen.',
+  'preferences.accounts.enterpriseDescription':
+    'Wenn du GitHub Enterprise bei der Arbeit verwendest, melde dich an, um auf deine Repositories zuzugreifen.',
+  'preferences.integrations.applications': 'Anwendungen',
+  'preferences.integrations.externalEditor.darwin': 'Externer Editor',
+  'preferences.integrations.externalEditor.other': 'Externer Editor',
+  'preferences.integrations.externalEditor.ariaLabel': 'Externer Editor',
+  'preferences.integrations.noEditorsFound': 'Keine Editoren gefunden.',
+  'preferences.integrations.noOtherEditorsFound':
+    'Keine weiteren Editoren gefunden.',
+  'preferences.integrations.installEditor': '{name} installieren?',
+  'preferences.integrations.configureCustomEditor.darwin':
+    'Benutzerdefinierten Editor konfigurieren...',
+  'preferences.integrations.configureCustomEditor.other':
+    'Benutzerdefinierten Editor konfigurieren...',
+  'preferences.integrations.shell': 'Shell',
+  'preferences.integrations.configureCustomShell.darwin':
+    'Benutzerdefinierte Shell konfigurieren...',
+  'preferences.integrations.configureCustomShell.other':
+    'Benutzerdefinierte Shell konfigurieren...',
+  'preferences.integrations.custom.path': 'Pfad',
+  'preferences.integrations.custom.arguments': 'Argumente',
+  'preferences.integrations.custom.pathPlaceholder':
+    'Pfad zur ausf?hrbaren Datei',
+  'preferences.integrations.custom.argumentsPlaceholder':
+    'Kommandozeilenargumente',
+  'preferences.integrations.custom.choose': 'Ausw?hlen...',
+  'preferences.integrations.custom.invalidPath':
+    'Dieser Pfad scheint keine g?ltige ausf?hrbare Datei zu sein.',
+  'preferences.integrations.custom.invalidArguments':
+    'Diese Argumente sind ung?ltig.',
+  'preferences.integrations.custom.missingTargetPath':
+    'Die Argumente m?ssen den Platzhalter f?r den Zielpfad ({placeholder}) enthalten.',
+  'preferences.notifications.heading': 'Benachrichtigungen',
+  'preferences.notifications.enable': 'Benachrichtigungen aktivieren',
+  'preferences.notifications.description':
+    'Erlaubt das Anzeigen von Benachrichtigungen, wenn wichtige Ereignisse im aktuellen Repository auftreten.',
+  'preferences.notifications.grantPermission.prefix': 'Du musst',
+  'preferences.notifications.grantPermission.link':
+    'Berechtigung erteilen',
+  'preferences.notifications.grantPermission.suffix':
+    ', damit GitHub Desktop diese Benachrichtigungen anzeigen kann.',
+  'preferences.notifications.denied.prefix':
+    'GitHub Desktop hat keine Berechtigung, Benachrichtigungen anzuzeigen. Bitte aktiviere sie in den',
+  'preferences.notifications.denied.suffix': '.',
+  'preferences.notifications.settingsLink': 'Benachrichtigungseinstellungen',
+  'preferences.notifications.configured': 'korrekt konfiguriert',
+  'preferences.notifications.enabled': 'aktiviert',
+  'preferences.notifications.settings.prefix':
+    'Stelle sicher, dass Benachrichtigungen für GitHub Desktop in den Einstellungen {verb} sind',
+  'preferences.notifications.settings.suffix': '.',
+  'preferences.prompts.confirm.heading':
+    'Vor folgenden Aktionen einen Bestätigungsdialog anzeigen...',
+  'preferences.prompts.confirm.removingRepositories':
+    'Repositories entfernen',
+  'preferences.prompts.confirm.discardingChanges': 'Änderungen verwerfen',
+  'preferences.prompts.confirm.discardingChangesPermanently':
+    'Änderungen endgültig verwerfen',
+  'preferences.prompts.confirm.discardingStash': 'Stash verwerfen',
+  'preferences.prompts.confirm.checkingOutCommit':
+    'Einen Commit auschecken',
+  'preferences.prompts.confirm.forcePushing': 'Force-Push ausführen',
+  'preferences.prompts.confirm.undoCommit': 'Commit rückgängig machen',
+  'preferences.prompts.confirm.overrideCommitMessage':
+    'Commit-Nachricht mit generierter Nachricht überschreiben',
+  'preferences.prompts.confirm.filteredChanges':
+    'Durch Filter ausgeblendete Änderungen committen',
+  'preferences.prompts.switchBranches.heading':
+    'Wenn ich Änderungen habe und den Branch wechsle...',
+  'preferences.prompts.switchBranches.ask':
+    'Fragen, wohin meine Änderungen verschoben werden sollen',
+  'preferences.prompts.switchBranches.move':
+    'Meine Änderungen immer in den neuen Branch mitnehmen',
+  'preferences.prompts.switchBranches.stash':
+    'Meine Änderungen immer stashen und auf dem aktuellen Branch lassen',
+  'preferences.prompts.commitLength.heading': 'Commit-Länge',
+  'preferences.prompts.commitLength.showWarning':
+    'Warnung zur Commit-Länge anzeigen',
+  'preferences.advanced.backgroundUpdates.heading':
+    'Hintergrundaktualisierungen',
+  'preferences.advanced.backgroundUpdates.showStatusIcons':
+    'Statussymbole in der Repository-Liste anzeigen',
+  'preferences.advanced.backgroundUpdates.description.one':
+    'Diese Symbole zeigen an, welche Repositories lokale oder entfernte Änderungen haben, und erfordern das regelmäßige Abrufen von Repositories, die aktuell nicht ausgewählt sind.',
+  'preferences.advanced.backgroundUpdates.description.two':
+    'Wenn du dies deaktivierst, wird das regelmäßige Abrufen des aktuell ausgewählten Repositorys nicht gestoppt, es kann aber die Gesamtleistung der App für Nutzer mit vielen Repositories verbessern.',
+  'preferences.advanced.usage.heading': 'Nutzung',
+  'preferences.advanced.usage.labelPrefix':
+    'Hilf GitHub Desktop, besser zu werden, indem du',
+  'preferences.advanced.usage.link': 'Nutzungsstatistiken',
+  'preferences.advanced.network.heading': 'Netzwerk und Anmeldedaten',
+  'preferences.advanced.network.useGcm':
+    'Git Credential Manager verwenden',
+  'preferences.advanced.network.useGcmDescription.prefix': 'Verwende',
+  'preferences.advanced.network.useGcmDescription.link':
+    'Git Credential Manager',
+  'preferences.advanced.network.useGcmDescription.suffix':
+    'für private Repositories außerhalb von GitHub.com. Diese Funktion ist experimentell und kann sich ändern.',
+  'preferences.advanced.network.useSystemSsh':
+    'System-OpenSSH verwenden (empfohlen)',
+  'preferences.accessibility.heading': 'Barrierefreiheit',
+  'preferences.accessibility.underlineLinks': 'Links unterstreichen',
+  'preferences.accessibility.underlineDescription':
+    'Wenn aktiviert, unterstreicht GitHub Desktop Links in Commit-Nachrichten, Kommentaren und anderen Textfeldern. Das kann helfen, Links leichter zu erkennen.',
+  'preferences.accessibility.exampleLink': 'Dies ist ein Beispiel-Link',
+  'preferences.accessibility.showDiffCheckMarks':
+    'Häkchen in der Diff-Ansicht anzeigen',
+  'preferences.accessibility.diffCheckMarksDescription':
+    'Wenn aktiviert, werden beim Committen Häkchen neben Zeilennummern und Zeilengruppen in der Diff-Ansicht angezeigt. Wenn deaktiviert, sind die Steuerelemente für Zeilennummern weniger auffällig.',
+  'toolbar.repository.current': 'Aktuelles Repository',
+  'toolbar.branch.current': 'Aktueller Branch',
+  'toolbar.branch.detached': 'Detached HEAD',
+  'toolbar.pushPull.lastFetched': 'Zuletzt abgerufen',
+  'toolbar.pushPull.neverFetched': 'Noch nie abgerufen',
+  'toolbar.pushPull.publishRepository.title': 'Repository veröffentlichen',
+  'toolbar.pushPull.publishRepository.description':
+    'Dieses Repository auf GitHub veröffentlichen',
+  'toolbar.pushPull.publishBranch.title': 'Branch veröffentlichen',
+  'toolbar.pushPull.publishBranch.description.github':
+    'Diesen Branch auf GitHub veröffentlichen',
+  'toolbar.pushPull.publishBranch.description.remote':
+    'Diesen Branch auf dem Remote veröffentlichen',
+  'toolbar.pushPull.rebaseInProgress': 'Rebase läuft',
+  'toolbar.pushPull.detachedHead':
+    'Detached HEAD kann nicht veröffentlicht werden',
+  'toolbar.pushPull.fetch': '{remoteName} abrufen',
+  'toolbar.pushPull.pull': '{remoteName} holen',
+  'toolbar.pushPull.pullWithRebase':
+    '{remoteName} mit Rebase holen',
+  'toolbar.pushPull.push': '{remoteName} pushen',
+  'toolbar.pushPull.forcePush': '{remoteName} mit Force-Push pushen',
+  'repository.tab.changes': 'Änderungen',
+  'repository.tab.history': 'Verlauf',
+  'changes.noChanges.title': 'Keine lokalen Änderungen',
+  'changes.noChanges.description':
+    'In diesem Repository gibt es keine nicht committeten Änderungen. Hier sind ein paar hilfreiche Vorschläge für den nächsten Schritt.',
+  'changes.noChanges.openInExternalEditor.title':
+    'Das Repository im externen Editor öffnen',
+  'changes.noChanges.openInExternalEditor.description.prefix':
+    'Editor auswählen in',
+  'changes.noChanges.showInFileManager.title':
+    'Die Dateien deines Repositorys in {fileManager} anzeigen',
+  'changes.noChanges.viewOnGitHub.title':
+    'Die Repository-Seite auf GitHub im Browser öffnen',
+  'changes.noChanges.viewStash.title': 'Deine gestashten Änderungen anzeigen',
+  'changes.noChanges.viewStash.button': 'Stash anzeigen',
+  'changes.noChanges.publishRepository.title':
+    'Dein Repository auf GitHub veröffentlichen',
+  'changes.noChanges.publishRepository.description':
+    'Dieses Repository ist derzeit nur auf deinem lokalen Rechner verfügbar. Wenn du es auf GitHub veröffentlichst, kannst du es teilen und mit anderen zusammenarbeiten.',
+  'changes.noChanges.publishBranch.title': 'Deinen Branch veröffentlichen',
+  'changes.noChanges.pullRequest.create.title':
+    'Einen Pull Request aus deinem aktuellen Branch erstellen',
+  'changes.noChanges.pullRequest.create.button':
+    'Pull Request erstellen',
+  'changes.noChanges.pullRequest.preview.title':
+    'Den Pull Request aus deinem aktuellen Branch in der Vorschau ansehen',
+  'changes.noChanges.pullRequest.preview.button':
+    'Pull Request-Vorschau',
+  'changes.filter.placeholder': 'Filtern',
+  'changes.filter.clear': 'Filter löschen',
+  'changes.filter.noResults.title':
+    'Keine Dateien entsprechen den aktuellen Filtern',
+  'changes.filter.options.title': 'Filteroptionen',
+  'changes.filter.options.close': 'Schließen',
+  'changes.filter.options.included': 'Im Commit enthalten ({count})',
+  'changes.filter.options.excluded': 'Vom Commit ausgeschlossen ({count})',
+  'changes.filter.options.new': 'Neue Dateien ({count})',
+  'changes.filter.options.modified': 'Geänderte Dateien ({count})',
+  'changes.filter.options.deleted': 'Gelöschte Dateien ({count})',
+  'changes.filter.options.button.active':
+    'Filteroptionen ({count} aktiv)',
+  'changes.filter.hiddenWarning.prefix':
+    'Ausgeblendete Änderungen werden committet.',
+  'changes.filter.hiddenWarning.link':
+    'Passe die Filter an, um alle {count} Änderungen zu sehen',
+  'changes.stashed.title': 'Gestashte Änderungen',
+  'changes.warning': 'Warnung:',
+  'changes.commit.ariaLabel': 'Commit erstellen',
+  'changes.commit.summary': 'Zusammenfassung',
+  'changes.commit.summaryRequired': 'Zusammenfassung (erforderlich)',
+  'changes.commit.summaryScreenReader': 'Commit-Zusammenfassung',
+  'changes.commit.description': 'Beschreibung',
+  'changes.commit.descriptionScreenReader': 'Commit-Beschreibung',
+  'changes.commit.button.commit': 'Committen',
+  'changes.commit.button.committing': 'Wird committet',
+  'changes.commit.button.amend': 'Ändern',
+  'changes.commit.button.amending': 'Wird geändert',
+  'changes.commit.button.to': 'an',
+  'changes.commit.button.file': 'Datei',
+  'changes.commit.button.files': 'Dateien',
+  'changes.commit.button.lastCommit': 'letzter Commit',
+  'changes.commit.tooltip.summaryRequired':
+    'Zum Committen ist eine Zusammenfassung erforderlich',
+  'changes.commit.tooltip.selectFiles':
+    'Wähle eine oder mehrere Dateien zum Committen aus',
+  'changes.commit.tooltip.committing': 'Änderungen werden committet...',
+  'changes.commit.generating': 'Commit-Details werden erstellt...',
 }

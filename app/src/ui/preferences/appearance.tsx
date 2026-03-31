@@ -215,6 +215,12 @@ export class Appearance extends React.Component<
           <option value="zh-CN">
             {t('preferences.appearance.language.simplifiedChinese')}
           </option>
+          <option value="ja">
+            {t('preferences.appearance.language.japanese')}
+          </option>
+          <option value="de">
+            {t('preferences.appearance.language.german')}
+          </option>
         </Select>
       </div>
     )
